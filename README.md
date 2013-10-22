@@ -53,11 +53,13 @@ Just pull or clone the repository recursively.
 
 Navigate to the MARC2RDF base directory where you'll find the file 'tordf.php'. At the command line type
 
-    php tordf.php [-s <PATH_TO_YOUR_MARC_SOURCE>] [-i <MARC_INPUT_FORMAT>] [-o <RDF_OUTPUT_SERIALIZATION>]
+    php tordf.php -s <PATH_TO_YOUR_MARC_SOURCE> -i <MARC_INPUT_FORMAT> -o <RDF_OUTPUT_SERIALIZATION>
 
 This will output your MARC data in RDF with the desired output serialization. See [Using the command line interface] for further explanation of the command line options.
 
 # Using the command line interface
+
+[Using the command line interface]: #cmd
 
 With the marc3rdf command line interface you can only use MARC data from a file. If you fetch your MARC data from a stream you can only do this by using a custom php script.
 
@@ -136,6 +138,8 @@ There is also a more powerful way to access MARC fields via [callbacks].
 
 ## @context
 
+[@context]: #context
+
 In the template you must create a **@context** node. In the @context node the only mandatory entry is the MARC2RDF namespace declaration. 
 
     {
@@ -175,6 +179,8 @@ See [default callbacks] for specific usage.
 If you want to use a callback function to return a value for the rdf:type property, then you can't use the JSON-LD syntax token '@type'. The solution is to define the property 'type' within the @context node and use that instead of '@type'.
 
 ### default callbacks
+
+[default callbacks]: #default
 
 There are a bunch of predefined default callback functions that are listed here. Each default callback function takes one to n parameters (often the number is fixed), which are either MARC specs or nonspecs. Nonspecs must always be urlencoded.
 
@@ -290,6 +296,8 @@ Return data from param 1 with start position in param 2 and end position in para
 
 ### create custom callbacks
 
+[create custom callbacks]: #custom
+
 Custom callback functions names must start with 'callback', otherwise they cannot be called.
 
 A callback functions takes two parameters. The first is the MARC record and the second is an array containing MARC specs and nonspes.
@@ -333,6 +341,8 @@ Return the data at the end of the function. Then include your custom callbacks i
 or use the -c option for the command line interface.
 
 ### dealing with dynamic blank nodes
+
+[dealing with dynamic blank nodes]: #bnodes
 
 For example you specified a blank node in your template
 

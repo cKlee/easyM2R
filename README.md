@@ -1,6 +1,6 @@
 # MARC2RDF BETA
 
-*This is a beta version and still be tested.*
+**This is a beta version and still being tested.**
 
 MARC2RDF is a php-based attempt to easily convert MARC data to RDF.
 
@@ -61,7 +61,7 @@ This will output your MARC data in RDF with the desired output serialization. Se
 
 With the marc3rdf command line interface you can only use MARC data from a file. If you fetch your MARC data from a stream you can only do this by using a custom php script.
 
-The command line interface is called via the script *tordf.php* with the command *php tordf.php*. At the command line interface you have these options
+The command line interface is called via the script **tordf.php** with the command **php tordf.php**. At the command line interface you have these options
 
 * -t Path to the jsonld template
 * -o The output format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg' 
@@ -94,7 +94,7 @@ Using MARC2RDF within a custom PHP script is necessary if you fetch the MARC dat
 
 ## Choosing the right class
 
-MARC2RDF provides to main classes *MARCFILE2RDF* and *MARCSTRING2RDF*. Use the MARCFILE2RDF class if your data resides in a file and use MARCSTRING2RDF if you want to pass your MARC data as a string to MARC2RDF.
+MARC2RDF provides to main classes **MARCFILE2RDF** and **MARCSTRING2RDF**. Use the MARCFILE2RDF class if your data resides in a file and use MARCSTRING2RDF if you want to pass your MARC data as a string to MARC2RDF.
 
 ### Class MARCFILE2RDF
 
@@ -122,7 +122,7 @@ As an example a default template is provided [**`default.jsonld`**](template/def
 
 ## MARC spec
 
-In the template you want to access the MARC fields and subfields. This is done via a *MARC spec*. A MARC spec has a simple syntax:
+In the template you want to access the MARC fields and subfields. This is done via a **MARC spec**. A MARC spec has a simple syntax:
 
     field_subfield
 
@@ -136,7 +136,7 @@ There is also a more powerful way to access MARC fields via [callbacks].
 
 ## @context
 
-In the template you must create a *@context* node. In the @context node the only mandatory entry is the MARC2RDF namespace declaration. 
+In the template you must create a **@context** node. In the @context node the only mandatory entry is the MARC2RDF namespace declaration. 
 
     {
         "@context": {
@@ -148,9 +148,9 @@ The prefix of the MARC2RDF namespace must be 'marc2rdf'. The namespaces identifi
 
 ## @graph
 
-The *@graph* is the template for each MARC record.
+The **@graph** is the template for each MARC record.
 
-Within the @graph you must define the resources *@id*. The value of the @id consists of the MARC2RDF namespace prefix and a MARC spec. I.e.
+Within the @graph you must define the resources **@id**. The value of the @id consists of the MARC2RDF namespace prefix and a MARC spec. I.e.
 
     {
         "@id": "marc2rdf:001_0"
@@ -162,7 +162,7 @@ Now define your properties and objects. Regardless of the node type you create (
 
 ## callbacks
 
-MARC data is not always that easy to access. Sometimes you have to check the indicator first, or look up substrings. Or if you want to join data from subfields or shape data in a different way, there is a powerful way to do this via *callbacks*.
+MARC data is not always that easy to access. Sometimes you have to check the indicator first, or look up substrings. Or if you want to join data from subfields or shape data in a different way, there is a powerful way to do this via **callbacks**.
 
 Callbacks are functions that are called if you specify them in the template. There are some default callbacks (see [default callbacks]) but you can write your own callbacks (see [create custom callbacks]).
 
@@ -178,7 +178,7 @@ If you want to use a callback function to return a value for the rdf:type proper
 
 There are a bunch of predefined default callback functions that are listed here. Each default callback function takes one to n parameters (often the number is fixed), which are either MARC specs or nonspecs. Nonspecs must always be urlencoded.
 
-#### callback_with_indicators
+#### callback\_with_indicators
 
 * param 1: MARC spec
 * param 2: indicator 1
@@ -186,14 +186,14 @@ There are a bunch of predefined default callback functions that are listed here.
 
 Return data, if subfield has indicator 1 and indicator 2.
 
-#### callback_with_indicator2
+#### callback\_with_indicator2
 
 * param 1: MARC spec
 * param 2: indicator 2
 
 Return data, if subfield has indicator 2.
 
-#### callback_with_indicator1
+#### callback\_with_indicator1
 
 * param 1: MARC spec
 * param 2: indicator 1
@@ -215,14 +215,14 @@ leads to
 
     Detmold : Kreis Lippe, Der Landrat
 
-#### callback_substring_after
+#### callback\_substring_after
 
 * param 1: MARC spec
 * param 2: substring
 
 Return data comes after substring.
 
-#### callback_subfield_context
+#### callback\_subfield_context
 
 * param 1: MARC spec
 * param 2: MARC spec
@@ -230,27 +230,27 @@ Return data comes after substring.
 
 Returns data from param 1, if context is substring of data from param 2. 
 
-#### callback_string_contains
+#### callback\_string_contains
 
 * param 1: MARC spec
 * param 2: containing string
 
 Return data if data from param 1 contains string in param 2.
 
-#### callback_prefix_in_parentheses
+#### callback\_prefix_in_parentheses
 
 * param 1: MARC spec
 * param 2: prefixed string
 
 Return data without prefix from param 1 if it is prefixed with param 2 in parentheses.
 
-#### callback_multi_subfields
+#### callback\_multi_subfields
 
 * param 1-n: MARC spec
 
 Return data from all MARC specs.
 
-#### callback_make_iri_with_indicator2
+#### callback\_make\_iri\_with_indicator2
 
 * param 1: MARC spec
 * param 2: IRI prefix
@@ -258,7 +258,7 @@ Return data from all MARC specs.
 
 Return IRI consisting of value of param 2 and data from param 1, if indicator 2 equals param 3. 
 
-#### callback_make_iri_with_indicator1
+#### callback\_make\_iri\_with_indicator1
 
 * param 1: MARC spec
 * param 2: IRI prefix
@@ -266,7 +266,7 @@ Return IRI consisting of value of param 2 and data from param 1, if indicator 2 
 
 Return IRI consisting of value of param 2 and data from param 1, if indicator 1 equals param 3. 
 
-#### callback_make_iri
+#### callback\_make_iri
 
 * param 1: MARC spec
 * param 2: IRI prefix
@@ -280,7 +280,7 @@ Return IRI consisting of value of param 2 and data from param 1.
 
 Return data from param 1-n joined with character in param m. 
 
-#### callback_control_field_substring
+#### callback\_control\_field_substring
 
 * param 1: MARC spec
 * param 2: start position

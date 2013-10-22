@@ -1,13 +1,23 @@
-# marc2rdf BETA
+# MARC2RDF BETA
 
 *This is a beta version and still be tested.*
 
-marc2rdf is a php-based attempt to easily convert MARC data to RDF.
+MARC2RDF is a php-based attempt to easily convert MARC data to RDF.
 
 It's easy because you only need
+
   * your MARC data as a file or a string
   * a valid JSON-LD file which shows how your data should look like in RDF
   * PHP installed in version 5.3.x or higher
+
+# Credits
+
+MARC2RDF is build upon the following software
+
+* File_MARC by Dan Scott, Copyright (c) 1991, 1999 Free Software Foundation, Inc.
+* JSON-LD processor for PHP and IRI Copyright (c) by Markus Lanthaler
+* EasyRdf Copyright (c) by Nicholas J Humfrey
+* forceutf8 by Sebastián Grignoli
 
 # Overview
 
@@ -37,11 +47,11 @@ It's easy because you only need
 
 Just pull or clone the repository recursively.
 
-    git clone --recursive http://github.com/cklee/marc2rdf.git
+    git clone --recursive http://github.com/cklee/MARC2RDF.git
 
 # Quickstart using the command line
 
-Navigate to the marc2rdf base directory where you'll find the file 'tordf.php'. At the command line type
+Navigate to the MARC2RDF base directory where you'll find the file 'tordf.php'. At the command line type
 
     php tordf.php \[-s <PATH_TO_YOUR_MARC_SOURCE>] \[-i <MARC_INPUT_FORMAT>] \[-o <RDF_OUTPUT_SERIALIZATION>]
 

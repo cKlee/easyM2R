@@ -148,7 +148,6 @@ class MARC2RDF {
 				if(!is_null($reverseProperties))
 				{
 					if( '@type' === key($reverseProperties) ) continue;
-					#if( 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' === key($reverseProperties) ) continue;
 				}
 				
 				$rev = array();
@@ -277,7 +276,6 @@ class MARC2RDF {
 	*/
 	private function iterateProperties()
 	{
-		#print "\n\n\n".$this->node->getId()."(".key($this->node->getReverseProperties()).")";
 		$properties = $this->node->getProperties();
 		foreach($properties as $propertyName => $propertyValue)
 		{
@@ -309,7 +307,6 @@ class MARC2RDF {
 	*/
 	private function addProperties($propertyName,jld\JsonLdSerializable $propertyValue)
 	{
-		#print "\n--".$propertyName;
 		$data = false;
 		if(method_exists($propertyValue,'getValue'))
 		{
@@ -331,7 +328,6 @@ class MARC2RDF {
 			$key = key($data);
 			if('_:' == substr($key, 0, 2))
 			{
-				#print_r($data);
 				$this->dynamicBlankNode($data,$propertyName,$type);
 				return;
 			}
@@ -339,7 +335,6 @@ class MARC2RDF {
 			{
 				foreach($data as $val)
 				{
-					#print "\n....added property: ".$propertyName." with value ".$val." and type ".$type;
 					$this->currentNode->addPropertyValue($propertyName,new TypedValue($val,$type));
 				}
 			}
@@ -347,7 +342,6 @@ class MARC2RDF {
 			{
 				foreach($data as $val)
 				{
-					#print "\n....added property: ".$propertyName." with value ".$val;
 					$this->currentNode->addPropertyValue($propertyName,$val);
 				}
 			}
@@ -477,7 +471,6 @@ class MARC2RDF {
 
 		if( !is_null( $this->callback ) )
 		{
-			#print "\nCALLBACK".$this->callback;
 			$_params = array();
 			$_params['specs'] = $this->spec;
 			$_params['nonspecs'] = $this->nonSpec;
@@ -593,7 +586,6 @@ class MARC2RDF {
 		if( strstr($wholeSpec,'callback') )
 		{
 			preg_match('/^(callback.*)\((.*)\)/',$wholeSpec,$matches);
-			#print_r($matches);
 			$this->callback = $matches[1];
 			$_parameter = explode(',',$matches[2]);
 			$_callback_param = null;

@@ -6,7 +6,12 @@
 * file that was distributed with this source code.
 */
 $path = ini_get('include_path');
-ini_set('include_path', dirname(__FILE__).'/m2r_lib'.PATH_SEPARATOR.$path);
+$otherPaths = array('/m2r_lib','/m2r_lib/PEAR_Exception','/m2r_lib/File_MARC');
+foreach($otherPaths as $otherPath)
+{
+	ini_set('include_path', dirname(__FILE__).$otherPath.PATH_SEPARATOR.$path);
+	$path = ini_get('include_path');
+}
 spl_autoload_register(
 	function ($class) {
 		if (0 === strpos($class, 'ML\\JsonLD\\')) {
@@ -24,12 +29,12 @@ spl_autoload_register(
 		}
 		elseif($class == 'File_MARC') 
 		{
-			require_once 'File/MARC.php';
+			require_once 'File_MARC/File/MARC.php';
 			return true;
 		}
 		elseif($class == 'File_MARCXML')
 		{
-			require_once 'File/MARCXML.php';
+			require_once 'File_MARC/File/MARCXML.php';
 			return true;
 		}
 		elseif($class == 'EasyRdf_Graph' || $class == 'EasyRdf_Namespace')
@@ -37,7 +42,7 @@ spl_autoload_register(
 			require_once "easyrdf/lib/EasyRdf.php";
 			return true;
 		}
-		elseif($class == 'ForceUTF8\Encoding')
+		elseif($class == 'ForceUTF8\\Encoding')
 		{
 			require_once "forceutf8/src/ForceUTF8/Encoding.php";
 			return true;
@@ -52,14 +57,9 @@ spl_autoload_register(
 			require_once "Validate/Validate.php";
 			return true;
 		}
-		elseif($class == 'Structures_LinkedList_Double')
+		elseif($class == 'PEAR_Exception')
 		{
-			require_once "Structures_LinkedList/Structures/LinkedList/Double.php";
-			return true;
-		}
-		elseif($class == 'Structures_LinkedList_Single')
-		{
-			require_once "Structures_LinkedList/Structures/LinkedList/Single.php";
+			require_once "PEAR_Exception/PEAR/Exception.php";
 			return true;
 		}
 	}

@@ -53,7 +53,7 @@ Just pull or clone the repository recursively.
 
 Navigate to the MARC2RDF base directory where you'll find the file 'tordf.php'. At the command line type
 
-    php tordf.php \[-s <PATH_TO_YOUR_MARC_SOURCE>] \[-i <MARC_INPUT_FORMAT>] \[-o <RDF_OUTPUT_SERIALIZATION>]
+    php tordf.php [-s <PATH_TO_YOUR_MARC_SOURCE>] [-i <MARC_INPUT_FORMAT>] [-o <RDF_OUTPUT_SERIALIZATION>]
 
 This will output your MARC data in RDF with the desired output serialization. See [Using the command line interface] for further explanation of the command line options.
 

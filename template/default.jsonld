@@ -1,0 +1,197 @@
+{
+	"@context": {
+		"marc2rdf": "http://example.org/",
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"bibo": "http://purl.org/ontology/bibo/",
+		"dc": "http://purl.org/dc/elements/1.1/",
+		"dct": "http://purl.org/dc/terms/",
+		"rda": "http://rdvocab.info/Elements/",
+		"rdarel": "http://rdvocab.info/RDARelationshipsWEMI/",
+		"owl": "http://www.w3.org/2002/07/owl#",
+		"umbel": "http://umbel.org/umbel#",
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",
+		"test": "http://www.testmedium.com#",
+		"type": {
+			"@id": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+			"@type": "@id"
+		},
+		"title": {
+			"@id": "http://purl.org/dc/elements/1.1/title",
+			"@type": "xsd:string"
+		},
+		"otherTitleInformation": {
+			"@id": "http://rdvocab.info/Elements/otherTitleInformation",
+			"@type": "xsd:string"
+		},
+		"uniformTitle": {
+			"@id": "http://purl.org/dc/terms/alternative",
+			"@type": "xsd:string"
+		},
+		"shortTitle": {
+			"@id": "http://purl.org/ontology/bibo/shortTitle",
+			"@type": "xsd:string"
+		},
+		"parallelTitle": {
+			"@id": "http://purl.org/dc/terms/alternative",
+			"@type": "xsd:string"
+		},
+		"creator": {
+			"@id": "http://purl.org/dc/terms/creator",
+			"@type": "@id"
+		},
+		"creatorName": {
+			"@id": "http://purl.org/dc/elements/1.1/creator",
+			"@type": "xsd:string"
+		},
+		"contributor": {
+			"@id": "http://purl.org/dc/terms/contributor",
+			"@type": "@id"
+		},
+		"contributorName": {
+			"@id": "http://purl.org/dc/elements/1.1/contributor",
+			"@type": "xsd:string"
+		},
+		"publicationStatement": {
+			"@id": "http://rdvocab.info/Elements/publicationStatement",
+			"@type": "xsd:string"
+		},
+		"placeOfPublication": {
+			"@id": "http://rdvocab.info/Elements/placeOfPublication",
+			"@type": "xsd:string"
+		},
+		"publisher": {
+			"@id": "http://purl.org/dc/elements/1.1/publisher",
+			"@type": "xsd:string"
+		},
+		"issued": {
+			"@id": "http://purl.org/dc/terms/issued",
+			"@type": "xsd:string"
+		},
+		"sameAs": {
+			"@id": "http://www.w3.org/2002/07/owl#sameAs",
+			"@type": "@id"
+		},
+		"similar": {
+			"@id": "http://umbel.org/umbel#isLike",
+			"@type": "@id"
+		},
+		"issn": {
+			"@id": "http://purl.org/ontology/bibo/issn",
+			"@type": "xsd:string"
+		},
+		"eissn": {
+			"@id": "http://purl.org/ontology/bibo/eissn",
+			"@type": "xsd:string"
+		},
+		"lccn": {
+			"@id": "http://purl.org/ontology/bibo/lccn",
+			"@type": "xsd:string"
+		},
+		"oclcnum": {
+			"@id": "http://purl.org/ontology/bibo/oclcnum",
+			"@type": "xsd:string"
+		},
+		"isbn": {
+			"@id": "http://purl.org/ontology/bibo/isbn",
+			"@type": "xsd:string"
+		},
+		"medium": {
+			"@id": "http://purl.org/dc/terms/medium",
+			"@type": "@id"
+		},
+		"hasPart": {
+			"@id": "http://purl.org/dc/terms/hasPart",
+			"@type": "@id"
+		},
+		"isPartOf": {
+			"@id": "http://purl.org/dc/terms/isPartOf",
+			"@type": "@id"
+		},
+		"hasVersion": {
+			"@id": "http://purl.org/dc/terms/hasVersion",
+			"@type": "@id"
+		},
+		"isFormatOf": {
+			"@id": "http://purl.org/dc/terms/isFormatOf",
+			"@type": "@id"
+		},
+		"precededBy": {
+			"@id": "http://rdvocab.info/RDARelationshipsWEMI/precededBy",
+			"@type": "@id"
+		},
+		"succeededBy": {
+			"@id": "http://rdvocab.info/RDARelationshipsWEMI/succeededBy",
+			"@type": "@id"
+		},
+		"language": {
+			"@id": "http://purl.org/dc/terms/language",
+			"@type": "@id"
+		},
+		"extent": {
+			"@id": "http://iflastandards.info/ns/isbd/elements/P1053",
+			"@type": "xsd:string"
+		},
+		"edition": {
+			"@id": "http://purl.org/ontology/bibo/edition",
+			"@type": "xsd:string"
+		},
+		"bibliographicCitation": {
+			"@id": "http://purl.org/dc/terms/bibliographicCitation",
+			"@type": "xsd:string"
+		}
+	},
+	"@graph":
+	[
+		{
+			"@id": "marc2rdf:001_0",
+			"@type": "bibo:Document",
+			"title": {"@value": "marc2rdf:245_a", "@type": "xsd:string"},
+			"issn": {"@value": "marc2rdf:022_a", "@type": "xsd:string"},
+			"isbn": {"@value": "marc2rdf:020_a", "@type": "xsd:string"},
+			"otherTitleInformation": 
+			[ 
+				{"@value": "marc2rdf:245_b", "@type": "xsd:string"},
+				{"@value": "marc2rdf:callback_join(245_n,245_p,%3A)", "@type": "xsd:string"}
+			],
+			"uniformTitle":
+			[ 
+				{"@value": "marc2rdf:130_a", "@type": "xsd:string"},
+				{"@value": "marc2rdf:240_a", "@type": "xsd:string"},
+				{"@value": "marc2rdf:callback_with_indicator2(246_a,1)", "@type": "xsd:string"}
+			],
+			"shortTitle": {"@value": "marc2rdf:210_a", "@type": "xsd:string"} ,
+			"bibliographicCitation": {"@value": "A constant string", "@type": "xsd:string"} ,
+			"publicationStatement": {"@value": "marc2rdf:callback_template(260_a,260_b,260_c,$0%20%3A%20$1%2C%20$2)", "@type": "xsd:string"} ,
+			"creatorName": 
+			[ 
+				{"@value": "marc2rdf:100_a", "@type": "xsd:string"}, 
+				{"@value": "marc2rdf:110_a", "@type": "xsd:string"}
+			],
+			"contributorName":
+			[ 
+				{"@value": "marc2rdf:700_a", "@type": "xsd:string"}, 
+				{"@value": "marc2rdf:710_a", "@type": "xsd:string"}, 
+				{"@value": "marc2rdf:711_a", "@type": "xsd:string"}
+			],
+			"placeOfPublication": {"@value": "marc2rdf:260_a", "@type": "xsd:string"} ,
+			"publisher": {"@value": "marc2rdf:260_b", "@type": "xsd:string"} ,
+			"issued": 
+			[
+				{"@value": "marc2rdf:260_c", "@type": "xsd:string"} ,
+				{"@value": "marc2rdf:callback_control_field_substring(008_0,7,14)", "@type": "xsd:string"}
+			],
+			"hasPart": {"@id": "marc2rdf:774_w"} ,
+			"isPartOf": {"@id": "marc2rdf:773_w"} ,
+			"isPartOf": {"@id": "marc2rdf:770_w"} ,
+			"hasVersion": {"@id": "marc2rdf:775_w"} ,
+			"isFormatOf": {"@id": "marc2rdf:776_w"} ,
+			"precededBy": {"@id": "marc2rdf:780_w"} ,
+			"succeededBy": {"@id": "marc2rdf:marc2rdf:785_w"} ,
+			"language":{"@value": "marc2rdf:callback_control_field_substring(008_0,35,37)", "@type": "xsd:string"},
+			"extend":{"@value": "marc2rdf:300_a", "@type": "xsd:string"},
+			"edition":{"@value": "marc2rdf:250_a", "@type": "xsd:string"},
+			"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035_a,OCoLC)", "@type": "xsd:string"},
+			"lccn":{"@value": "marc2rdf:010_a", "@type": "xsd:string"}
+		}
+	]
+}

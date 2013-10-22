@@ -1,0 +1,3 @@
+[submodule "m2r_lib"]
+	path = m2r_lib
+	url = https://github.com/cKlee/m2r_lib.git

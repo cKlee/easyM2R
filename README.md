@@ -364,6 +364,6 @@ This would result in something like
             someprefix:property2 "value 6"
         ].
 
-But how do you know what blank node identifiers to use? This is the point where you'll need the value of the key 'rootId' in the var $_params. This value is the id of the currently created node. Just make sure that the first key in your returning array is that id and that all other keys are with a higher count.
+But how do you know what blank node identifiers to use? This is the point where you'll need the value of the key 'rootId' in the var $_params. This value is the id of the currently created node. Just make sure that the first key in your returning array is this id and that all other keys are with a higher count.
 
 

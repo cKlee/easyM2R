@@ -1,6 +1,6 @@
-# marc2rdf
+# marc2rdf BETA
 
-*This is a development version and still under construction*
+*This is a beta version and still be tested.*
 
 marc2rdf is a php-based attempt to easily convert MARC data to RDF.
 

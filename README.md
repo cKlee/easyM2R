@@ -47,7 +47,7 @@ MARC2RDF is build upon the following software
 
 Just pull or clone the repository recursively.
 
-    git clone --recursive http://github.com/cklee/MARC2RDF.git
+    git clone --recursive http://github.com/cKlee/MARC2RDF.git
 
 # Quickstart using the command line
 

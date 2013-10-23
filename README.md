@@ -102,19 +102,19 @@ MARC2RDF provides to main classes **MARCFILE2RDF** and **MARCSTRING2RDF**. Use t
 
 The MARCFILE2RDF class accepts 4 parameters:
 
-    * @param string The local path or URL of the jsonld template file
-    * @param string Path to MARC data as a file
-    * @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
-    * @param null|string The base IRI for each MARC record in RDF
+* @param string The local path or URL of the jsonld template file
+* @param string Path to MARC data as a file
+* @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
+* @param null|string The base IRI for each MARC record in RDF
 
 ### Class MARCFSTRING2RDF
 
 The MARCSTRING2RDF class accepts 4 parameters:
 
-    * @param string The local path or URL of the jsonld template file
-    * @param string MARC data as string
-    * @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
-    * @param null|string The base IRI for each MARC record in RDF
+* @param string The local path or URL of the jsonld template file
+* @param string MARC data as string
+* @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
+* @param null|string The base IRI for each MARC record in RDF
 
 # Configuration
 

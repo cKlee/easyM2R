@@ -47,7 +47,7 @@ MARC2RDF is build upon the following software
 
 Just pull or clone the repository recursively.
 
-    git clone --recursive http://github.com/cKlee/MARC2RDF.git
+    git clone --recursive https://github.com/cKlee/MARC2RDF.git
 
 # Quickstart using the command line
 
@@ -66,7 +66,7 @@ With the marc3rdf command line interface you can only use MARC data from a file.
 The command line interface is called via the script **tordf.php** with the command **php tordf.php**. At the command line interface you have these options
 
 * -t Path to the jsonld template
-* -o The output format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg' 
+* -o The output format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
 * -s The Path to your MARC source file
 * -i The MARC input format. 'xml' for MARCXML source
 * -c The path to your custom callback functions directory
@@ -104,7 +104,7 @@ The MARCFILE2RDF class accepts 4 parameters:
 
     * @param string The local path or URL of the jsonld template file
     * @param string Path to MARC data as a file
-    * @param null|string The MARC format
+    * @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
     * @param null|string The base IRI for each MARC record in RDF
 
 ### Class MARCFSTRING2RDF
@@ -113,7 +113,7 @@ The MARCSTRING2RDF class accepts 4 parameters:
 
     * @param string The local path or URL of the jsonld template file
     * @param string MARC data as string
-    * @param null|string The MARC format
+    * @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
     * @param null|string The base IRI for each MARC record in RDF
 
 # Configuration

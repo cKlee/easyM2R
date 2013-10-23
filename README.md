@@ -74,6 +74,16 @@ The command line interface is called via the script **tordf.php** with the comma
 
 All options are optional. But if you want to convert your own MARC data, you have to set the -s option at least.
 
+## Testing MARC2RDF via command line
+
+You can test MARC2RDF by using the example marc data with the command
+
+    php tordf.php -s examples/marc/e-discover.mrc
+
+For image formats you might pipe the output to a file
+
+    php tordf.php -s examples/marc/e-discover.mrc -o png > e-discover.png
+
 # Using MARC2RDF in a custom PHP script
 
 Using MARC2RDF within a custom PHP script is necessary if you fetch the MARC data from a stream as a string and pass on to MARC2RDF. This sample code gives a short insight how a custom script could look like:

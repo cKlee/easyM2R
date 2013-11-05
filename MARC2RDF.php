@@ -69,6 +69,16 @@ class MARC2RDF {
 	private $graph;
 	
 	/**
+	* @var GraphInterface The current template node
+	*/
+	private $node;
+	
+	/**
+	* @var string The current template node id
+	*/
+	private $nodeId;
+	
+	/**
 	* @var GraphInterface A temporary graph, will be merged into newGraph
 	*/
 	private $recordGraph;
@@ -141,22 +151,19 @@ class MARC2RDF {
 			$this->map = array();
 			
 			// iterate through all nodes
+			// create nodes
+			$i = 0;
 			foreach($nodes as $this->node)
 			{
-				$data = false;
-				$reverseProperties = $this->node->getReverseProperties();
-				if(!is_null($reverseProperties))
-				{
-					if( '@type' === key($reverseProperties) ) continue;
-				}
-				
-				$rev = array();
-				
-				$nodeId = $this->node->getId();
 
-				if( 0 === count($reverseProperties) )
+				$this->nodeId = $this->node->getId();
+				if(array_key_exists($this->nodeId,$this->map)) continue;
+				
+				$data = false;
+				
+				if( 0 === $i ) // this is the root node
 				{
-					$wholeSpec = str_replace($this->base,'',$nodeId);
+					$wholeSpec = str_replace($this->base,'',$this->nodeId);
 					if($data = $this->getMarcData($wholeSpec))
 					{
 						$data[0] = $this->base.$data[0];
@@ -168,15 +175,14 @@ class MARC2RDF {
 				}
 				else
 				{
-					$rev = $this->mapProperties($reverseProperties);
-					if(strstr($nodeId,$this->base))
+					if(strstr($this->nodeId,$this->base))
 					{
-						$wholeSpec = str_replace($this->base,'',$nodeId);
+						$wholeSpec = str_replace($this->base,'',$this->nodeId);
 						$data = $this->getMarcData($wholeSpec);
 					}
 					else
 					{
-						$data[0] = $nodeId;
+						$data[0] = $this->nodeId;
 					}
 				}
 				
@@ -198,52 +204,29 @@ class MARC2RDF {
 							continue 2;
 						}
 						
-						if('_:' === substr($id, 0, 2))
-						{
-							$this->currentNode = $this->recordGraph->createNode();
-							$this->map[$nodeId][] = $this->currentNode->getId();
-						}
-						else
+						if(!$this->recordGraph->getNode($id))
 						{
 							$this->currentNode = $this->recordGraph->createNode($id);
-							$this->map[$nodeId][] = $id;
+							$this->map[$this->nodeId][] = $id;
 						}
-						$this->typeForNode($this->node);
-						if(0 !== count($rev))
-						{
-							$this->linkNodes($rev);
-						}
+						$this->typeForNode();
 					}
 				}
 				$this->iterateProperties();
+				$i++;
 			} // node loop
 			
+			// link nodes
+			$this->linkNodes();
+			
 			// clean up recordGraph
-			$recordNodes = $this->recordGraph->getNodes();
-			foreach($recordNodes as $recordNode)
-			{
-				if($recordNode->isBlankNode())
-				{
-					$recordProperties = $recordNode->getProperties();
-					$rCnt = count($recordProperties);
-					if(0 === $rCnt)
-					{
-						$this->recordGraph->removeNode($recordNode);
-					}
-					elseif(1 === $rCnt)
-					{
-						$rProp = key($recordProperties);
-						if('@type' === $rProp || 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' === $rProp)
-						{
-							$this->recordGraph->removeNode($recordNode);
-						}
-					}
-				}
-			}
+			$this->cleanUp();
 			
 			// merge the record graph into the new resulting graph
 			$this->newGraph->merge($this->recordGraph);
 		} // marc loop
+		
+
 	}
 	
 	/**
@@ -255,9 +238,11 @@ class MARC2RDF {
 	*/
 	private function mapProperties(array $reverseProperties)
 	{
-		foreach($reverseProperties as $revName => $revNodes)
+		
+		foreach($reverseProperties as $revName => $revNodes) // rev template nodes
 		{
-			foreach($revNodes as $revNode)
+
+			foreach($revNodes as $revNode) // rev template node
 			{
 				$revNodeId = $revNode->getId();
 				foreach($this->map[$revNodeId] as $newRevNodeId)
@@ -351,16 +336,73 @@ class MARC2RDF {
 	/**
 	* Link currentNode and its referencing nodes
 	* @access private
-	* @param array $reverseProperties
 	*/
-	private function linkNodes(array $reverseProperties)
+	private function linkNodes()
 	{
-	
-		foreach($reverseProperties as $revProperty => $revNodes)
+		$i = 0;
+		foreach($this->map as $templateId => $newIds)
 		{
-			foreach($revNodes as $revNode)
+			if(0 !== $i) // root node does not have reverse properties
 			{
-				$revNode->addPropertyValue($revProperty,$this->currentNode);
+				$this->node = $this->graph->getNode($templateId);
+				$reverseProperties = $this->node->getReverseProperties();
+				if( '@type' === key($reverseProperties) ) continue;
+				if($reverse = $this->mapProperties($reverseProperties))
+				{
+					foreach($newIds as $newNodeId)
+					{
+						$this->currentNode = $this->recordGraph->getNode($newNodeId);
+						foreach($reverse as $revProperty => $revNodes)
+						{
+							foreach($revNodes as $revNode)
+							{
+								$revNode->addPropertyValue($revProperty,$this->currentNode);
+							}
+						}
+					}
+				}
+			}
+			$i++;
+		}
+	}
+	
+	/**
+	* Clean up new graph from empty blank nodes
+	*/
+	private function cleanUp()
+	{
+		$recordNodes = array_reverse($this->recordGraph->getNodes()); // clean inner nodes first
+		foreach($recordNodes as $recordNode)
+		{
+			if($recordNode->isBlankNode())
+			{
+				$recordProperties = $recordNode->getProperties();
+				$rCnt = count($recordProperties);
+				if(0 === $rCnt)
+				{
+					$this->recordGraph->removeNode($recordNode);
+				}
+				elseif(1 === $rCnt)
+				{
+					$rProp = key($recordProperties);
+					if('@type' === $rProp || 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' === $rProp)
+					{
+						$this->recordGraph->removeNode($recordNode);
+					}
+				}
+				#else
+				#{
+				#	foreach($recordProperties as $propName => $node)
+				#	{
+				#		if(is_a($node,'ML\JsonLD\Node'))
+				#		{
+				#			if( !$this->recordGraph->getNode($node->getId()) )
+				#			{
+				#				$this->recordGraph->removeNode($recordNode);
+				#			}
+				#		}
+				#	}
+				#}
 			}
 		}
 	}
@@ -377,10 +419,8 @@ class MARC2RDF {
 	*/
 	private function dynamicBlankNode(array $data,$propertyName = null,$type = null)
 	{
-		$reverseProperties = $this->node->getReverseProperties();
-		$rev = $this->mapProperties($reverseProperties);
-		$id = $this->node->getId();
-		
+		$templateId = key($data);
+
 		foreach($data as $key => $val)
 		{
 			if(array_key_exists($key,$this->map))
@@ -391,18 +431,16 @@ class MARC2RDF {
 			{
 				// create a new blank node
 				$this->currentNode = $this->recordGraph->createNode();
-				$this->map[$key][] = $this->currentNode->getId();
-				$this->typeForNode($this->node);
-				$this->linkNodes($rev);
+				$this->map[$templateId][] = $this->currentNode->getId();
+				$this->typeForNode();
 			}
 
 			if( 'http' === substr($val, 0, 4) )
 			{
-				$this->map[$id][] = $val;
+				$this->map[$this->nodeId][] = $val;
 				// create new named node
 				$this->currentNode = $this->recordGraph->createNode($val);
-				$this->typeForNode($this->node);
-				$this->linkNodes($rev);
+				$this->typeForNode();
 			}
 			else
 			{
@@ -416,21 +454,31 @@ class MARC2RDF {
 				}
 			}
 		}
+		$this->currentNode = $this->recordGraph->getNode($this->map[$this->nodeId][0]);
 	}
 	
 	/**
 	* Add type to the currentNode
 	* @access private
-	* @param NodeInterface $node
 	*/
-	private function typeForNode(jld\NodeInterface $node)
+	private function typeForNode()
 	{
-		$type = $node->getType();
+		$type = $this->node->getType();
 		
 		$types = null;
 		if(is_array($type))
 		{
-			$types = array_keys($type);
+			foreach($type as $tkey => $typeNode)
+			{
+				if (method_exists($typeNode, 'getId'))
+				{
+					$types[] = $typeNode->getId();
+				}
+				elseif('http' !== substr($tkey, 0, 4))
+				{
+					$types[] = $tkey;
+				}
+			}
 		}
 		elseif (method_exists($type, 'getId'))
 		{
@@ -443,7 +491,6 @@ class MARC2RDF {
 		
 		if(!is_null($types))
 		{
-			
 			foreach($types as $type)
 			{
 				$typeNode = $this->recordGraph->getNode($type);
@@ -625,7 +672,7 @@ class MARC2RDF {
 	*/
 	private static function _parseSpec($marcSpec)
 	{
-		$marcSpec = str_replace('__','_',$marcSpec);
+		$marcSpec = str_replace('__','_',urldecode($marcSpec));
 		$_marcSpec = explode('_',$marcSpec);
 		if(count($_marcSpec) < 2) return false;
 		$_pasedSpec['field'] = $_marcSpec[0];
@@ -663,12 +710,16 @@ class MARC2RDF {
 		}
 		
 		$nquads = new jld\NQuads();
-		$serialized = $outputGraph->toJsonLd(false);
+		$serialized = $outputGraph->toJsonLd(true);
 		$quads = jld\JsonLD::toRdf($serialized);
 
 		if($format == 'jsonld')
 		{
 			$output = jld\JsonLD::toString($serialized);
+		}
+		elseif($format == 'ntriples')
+		{
+			$output = $nquads->serialize($quads);
 		}
 		else
 		{
@@ -685,6 +736,7 @@ class MARC2RDF {
 			$graph = new \EasyRdf_Graph();
 			
 			$graph->parse($nquads->serialize($quads), 'ntriples');
+
 			$output = $graph->serialise($format);
 		}
 		return $output;

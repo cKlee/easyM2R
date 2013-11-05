@@ -7,14 +7,12 @@
 */
 
 
-/**
-*
-*
-* @input	object	$record: the MARC record 
-* @input	array	$_params: field specs and nonspecs
-*
-* @return
-*/
+function callback_leader(File_MARC_Record $record, array $_params){
+	$leader = $record->getLeader();
+	$length = $_params['nonspecs'][1] - $_params['nonspecs'][0] + 1;
+	return $dataSub = substr($leader,$_params['nonspecs'][0],$length);
+}
+
 function callback_with_indicators(File_MARC_Record $record, array $_params)
 {
 	$_subfields = null;
@@ -38,14 +36,6 @@ function callback_with_indicators(File_MARC_Record $record, array $_params)
 	return $_subfields;
 }
 
-/**
-*
-*
-* @input	object	$record: the MARC record 
-* @input	array	$_params: field specs and nonspecs
-*
-* @return
-*/
 function callback_with_indicator2(File_MARC_Record $record, array $_params){
 	// array to collect subfields
 	$_subfields = null;
@@ -75,14 +65,7 @@ function callback_with_indicator2(File_MARC_Record $record, array $_params){
 	return $_subfields;
 }
 
-/**
-*
-*
-* @input	object	$record: the MARC record 
-* @input	array	$_params: field specs and nonspecs
-*
-* @return
-*/
+
 function callback_with_indicator1(File_MARC_Record $record, array $_params){
 	$_subfields = null;
 	foreach($_params['specs'] as $_spec){
@@ -107,14 +90,6 @@ function callback_with_indicator1(File_MARC_Record $record, array $_params){
 	return $_subfields;
 }
 
-/**
-* Use a template to shape the data that will be returned
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return
-*/
 function callback_template(File_MARC_Record $record, array $_params){
 	$_subfields = null;
 	
@@ -157,14 +132,6 @@ function callback_template(File_MARC_Record $record, array $_params){
 	return $data;
 }
 
-/**
-* Get data from subfield where $_params['nonspecs'][0] is a substring
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return null|array
-*/
 function callback_substring_after(File_MARC_Record $record, array $_params){
 	$_data = null;
 	if($fields = $record->getFields($_params['specs'][0]['field']))
@@ -192,15 +159,6 @@ function callback_substring_after(File_MARC_Record $record, array $_params){
 	return $_data;
 }
 
-/**
-* Get content of subfield ($_params['specs'][0]['subfield']) of field ($_params['specs'][0]['field'])
-* if content of subfield ($_params['specs'][1]['subfield']) equals $_params['nonspecs'][0]
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return string|null The content of a subfield or null
-*/
 function callback_subfield_context(File_MARC_Record $record, array $_params)
 {
 	if($fields = $record->getFields($_params['specs'][0]['field']))
@@ -221,14 +179,6 @@ function callback_subfield_context(File_MARC_Record $record, array $_params)
 	return null;
 }
 
-/**
-* Get data of subfiled if contains string from $_params['nonspecs'][0]
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return null|array Data of subfields containing string
-*/
 function callback_string_contains(File_MARC_Record $record, array $_params)
 {
 	$_data = null;
@@ -251,14 +201,6 @@ function callback_string_contains(File_MARC_Record $record, array $_params)
 	return null;
 }
 
-/**
-* Get data from subfield where '('.$_params['nonspecs'][0].')' is prefixed
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return null|array
-*/
 function callback_prefix_in_parentheses(File_MARC_Record $record, array $_params)
 {
 	$_data = null;
@@ -283,14 +225,6 @@ function callback_prefix_in_parentheses(File_MARC_Record $record, array $_params
 	return $_data;
 }
 
-/**
-*
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return
-*/
 function callback_multi_subfields(File_MARC_Record $record, array $_params)
 {
 	$_subfields = null;
@@ -308,14 +242,6 @@ function callback_multi_subfields(File_MARC_Record $record, array $_params)
 	return $_subfields;
 }
 
-/**
-* Exspects IRI in ['nonspecs'][0] (will be prefixed) and optional a string in ['nonspecs'][1] must be a field indicator 2.
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return
-*/
 function callback_make_iri_with_indicator2(File_MARC_Record $record, array $_params)
 {
 	$_iris = null;
@@ -343,14 +269,6 @@ function callback_make_iri_with_indicator2(File_MARC_Record $record, array $_par
 	return $_iris;
 }
 
-/**
-* Exspects IRI in ['nonspecs'][0] (will be prefixed) and optional a string in ['nonspecs'][1] must be a field indicator 1.
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return
-*/
 function callback_make_iri_with_indicator1(File_MARC_Record $record, array $_params)
 {
 	$_iris = null;
@@ -378,14 +296,6 @@ function callback_make_iri_with_indicator1(File_MARC_Record $record, array $_par
 	return $_iris;
 }
 
-/**
-* Exspects IRI in ['nonspecs'][0] (will be prefixed) and optional a string in ['nonspecs'][1] must be found in data.
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return
-*/
 function callback_make_iri(File_MARC_Record $record, array $_params)
 {
 	$_iris = null;
@@ -423,14 +333,6 @@ function callback_make_iri(File_MARC_Record $record, array $_params)
 	return $_iris;
 }
 
-/**
-* Join all subfield data with char in nonspec
-*
-* @input File_MARC_Record $record the MARC record 
-* @input array $_params field specs and nonspecs
-*
-* @return array joined subfields
-*/
 function callback_join(File_MARC_Record $record, array $_params)
 {
 	$_data = null;
@@ -460,14 +362,6 @@ function callback_join(File_MARC_Record $record, array $_params)
 	return $_data;
 }
 
-/**
-*
-*
-* @input	object	$record: the MARC record 
-* @input	array	$_params: field specs and nonspecs
-*
-* @return substring of fiels data or null
-*/
 function callback_control_field_substring(File_MARC_Record $record, array $_params)
 {
 	if($field = $record->getField($_params['specs'][0]['field']))
@@ -481,14 +375,6 @@ function callback_control_field_substring(File_MARC_Record $record, array $_para
 	return null;
 }
 
-/**
-*
-*
-* @input	File_MARC_Data_Field $field a File_MARC_Data_Field
-* @input	string	$indicator2: field indicator 2
-*
-* @return bool true if field has value of $indicator1 or false if not
-*/
 function callback_check_indicator2(File_MARC_Data_Field $field, $indicator2)
 {
 	if(get_class($field) != 'File_MARC_Data_Field'){
@@ -498,14 +384,6 @@ function callback_check_indicator2(File_MARC_Data_Field $field, $indicator2)
 	return ($field->getIndicator(2) == $indicator2) ? true : false;
 }
 
-/**
-*
-*
-* @input	File_MARC_Data_Field $field a File_MARC_Data_Field
-* @input string $indicator1: field indicator 1
-*
-* @return true if field has value of $indicator1 or false if not
-*/
 function callback_check_indicator1(File_MARC_Data_Field $field,$indicator1)
 {
 	if(get_class($field) != 'File_MARC_Data_Field'){

@@ -126,6 +126,10 @@ The MARCSTRING2RDF class accepts 4 parameters:
 * @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
 * @param null|string The base IRI for each MARC record in RDF
 
+### XML caveat
+
+While it is possible to transform MARCXML data, there is a problem with namespaces within the XML. FILE_MARC does not handle namespaces until now. This behaviour may change in the future.
+
 # Configuration
 
 The configuration is done via a JSON-LD document called template. The template is the blue print for every graph resulting from a MARC record. The template has to follow some ground rules, but whatever you do in the template, remember that it must be a valid JSON-LD file. You can test the validity of your template via the [JSON-LD Playground](http://json-ld.org/playground/).
@@ -193,6 +197,16 @@ If you want to use a callback function to return a value for the rdf:type proper
 [default callbacks]: #default
 
 There are a bunch of predefined default callback functions that are listed here. Each default callback function takes one to n parameters (often the number is fixed), which are either MARC specs or nonspecs. Nonspecs must always be urlencoded.
+
+#### callback\_leader
+
+* param 1: MARC spec
+* param 2: start position
+* param 3: end position 
+
+Return data from param 1 with start position in param 2 and end position in param 3.
+
+While data in MARC leader is predominantly a code, this callback function is usually called from other callback functions, analayzing the returning code.
 
 #### callback\_with_indicators
 
@@ -396,4 +410,6 @@ This would result in something like
 
 But how do you know what blank node identifiers to use? This is the point where you'll need the value of the key 'rootId' in the var $_params. This value is the id of the currently created node. Just make sure that the first key in your returning array is this id and that all other keys are with a higher count.
 
+# Graph clean up
 
+The resulting graph will be cleaned of *empty* blank nodes only having a rdf:type property.

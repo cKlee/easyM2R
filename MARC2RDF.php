@@ -419,25 +419,28 @@ class MARC2RDF {
 	*/
 	private function dynamicBlankNode(array $data,$propertyName = null,$type = null)
 	{
-		$templateId = key($data);
-
 		foreach($data as $key => $val)
 		{
 			if(array_key_exists($key,$this->map))
 			{
 				$this->currentNode = $this->recordGraph->getNode($this->map[$key][0]);
 			}
+			elseif(array_key_exists($key,$this->map[$this->nodeId]))
+			{
+				$this->currentNode = $this->recordGraph->getNode($this->map[$this->nodeId][$key]);
+			}
 			else
 			{
 				// create a new blank node
 				$this->currentNode = $this->recordGraph->createNode();
-				$this->map[$templateId][] = $this->currentNode->getId();
+				$currentNodId = $this->currentNode->getId();
+				$this->map[$this->nodeId][$key] = $this->currentNode->getId();
 				$this->typeForNode();
 			}
 
 			if( 'http' === substr($val, 0, 4) )
 			{
-				$this->map[$this->nodeId][] = $val;
+				$this->map[$this->nodeId][$key] = $val;
 				// create new named node
 				$this->currentNode = $this->recordGraph->createNode($val);
 				$this->typeForNode();
@@ -734,8 +737,9 @@ class MARC2RDF {
 			}
 			
 			$graph = new \EasyRdf_Graph();
-			
-			$graph->parse($nquads->serialize($quads), 'ntriples');
+			$ntripleParser = new \EasyRdf_Parser_Ntriples();
+			$ntripleParser->parse($graph,$nquads->serialize($quads),'ntriples',$this->base);
+			#$graph->parse($nquads->serialize($quads), 'ntriples');
 
 			$output = $graph->serialise($format);
 		}

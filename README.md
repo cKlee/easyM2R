@@ -162,7 +162,7 @@ In the template you must create a **@context** node. In the @context node the on
         }
     }
 
-The prefix of the MARC2RDF namespace must be 'marc2rdf'. The namespaces identifier is also a prefix to your RDF resource IRI. Choose a custom identifier, which must end with '/' or '#'
+The prefix of the MARC2RDF namespace must be 'marc2rdf'. The namespaces identifier is also the base IRI to your RDF resources. Choose a custom identifier, which must end with '/' or '#'. You can overwrite the base IRI for your RDF resources by setting the $base param for the MARCFILE2RDF or MARCSTRING2RDF class or with the -b option for the command line tool.
 
 ## @graph
 

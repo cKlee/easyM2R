@@ -17,7 +17,7 @@ class MARCSTRING2RDF extends MARC2RDF {
 	* @param null|string $marc_format The MARC format
 	* @param null|string $base The base IRI for each MARC record in RDF 
 	*/
-	public function __construct($jsonld_file,$marc_string,$marc_format = null, $base = 'http://example.org/')
+	public function __construct($jsonld_file,$marc_string,$marc_format = null, $base = null)
 	{
 		if(!isset($jsonld_file)) throw new \Exception('Please provide a valid json-ld file.');
 		if(!isset($marc_string)) throw new \Exception('Please provide a MARC21 source string.');

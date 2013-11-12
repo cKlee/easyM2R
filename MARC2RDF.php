@@ -61,12 +61,17 @@ class MARC2RDF {
 	/**
 	* @var File_MARC_Record The current MARC record object
 	*/
-	private $marcRecord;
+	protected $marcRecord;
 	
 	/**
 	* @var GraphInterface The template graph
 	*/
 	private $graph;
+	
+	/**
+	* @var array All template nodes
+	*/
+	private $nodes;
 	
 	/**
 	* @var GraphInterface The current template node
@@ -119,41 +124,58 @@ class MARC2RDF {
 		$this->_checkFile($this->jsonld_file);
 		
 		$this->_setContext();
-		
-		if(!isset($this->base) && property_exists($this->context,'marc2rdf'))
+
+		if(is_null($this->base) && property_exists($this->context,'marc2rdf'))
 		{
 			$this->base = $this->context->{'marc2rdf'};
 		}
 		
 		$this->newGraph = new jld\Graph;
-	}
-	
-	/**
-	* marc2rdf the main method
-	*
-	* @access public
-	*/
-	public function marc2rdf()
-	{
+		
 		// load jsonld file into doc
 		$doc = jld\JsonLD::getDocument($this->jsonld_file);
 		
 		// make graph from doc
 		$this->graph = $doc->getGraph($this->graph_name);
-		
+
 		// get all nodes of graph
-		$nodes = $this->graph->getNodes();
-		
-		//iterate through the marc source
-		while ($this->marcRecord = $this->marcRecords->next()) 
+		$this->nodes = $this->graph->getNodes();
+	}
+	
+	/**
+	* Checks weather a MARC record is present or loop through all records
+	*/
+	protected function marc2rdfMode()
+	{
+		if(!isset($this->marcRecord))
 		{
+			print "TEST2";
+			$this->recordLoop();
+		}
+		else
+		{
+			$this->marc2rdf();
+			print "TEST";
+
+		}
+	}
+	
+	/**
+	* marc2rdf the main method
+	*
+	* @access protected
+	*/
+	protected function marc2rdf()
+	{
+		
+
 			$this->recordGraph = new jld\Graph;
 			$this->map = array();
 			
 			// iterate through all nodes
 			// create nodes
 			$i = 0;
-			foreach($nodes as $this->node)
+			foreach($this->nodes as $this->node)
 			{
 
 				$this->nodeId = $this->node->getId();
@@ -224,11 +246,20 @@ class MARC2RDF {
 			
 			// merge the record graph into the new resulting graph
 			$this->newGraph->merge($this->recordGraph);
-		} // marc loop
-		
-
 	}
 	
+	
+	/**
+	* Loop through MARC records
+	*/
+	protected function recordLoop()
+	{
+		print "LOOP";
+		while($this->marcRecord = $this->marcRecords->next()) 
+		{
+			$this->marc2rdf();
+		}
+	}
 	/**
 	* Reverse properties maped to reverse nodes of recordGraph
 	*

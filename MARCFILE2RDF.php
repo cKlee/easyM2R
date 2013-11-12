@@ -17,13 +17,13 @@ class MARCFILE2RDF extends MARC2RDF {
 	* @param null|string $marc_format The MARC format 
 	* @param null|string $base The base IRI for each MARC record in RDF 
 	*/
-	public function __construct($jsonld_file,$marc_file,$marc_format = null)
+	public function __construct($jsonld_file,$marc_file,$marc_format = null,$base = null,$perRecord = false)
 	{
 		if(!isset($jsonld_file)) throw new \Exception('Please provide a valid json-ld file.');
 		if(!isset($marc_file)) throw new \Exception('Please provide a MARC21 source file.');
 		// set jsonld file
 		$this->jsonld_file = $jsonld_file;
-
+		if(!is_null($base)) $this->base = $base;
 		try
 		{
 			parent::__construct();
@@ -34,11 +34,24 @@ class MARCFILE2RDF extends MARC2RDF {
 			// load marc records
 			$this->_loadMarcFile($marc_format);
 			
-			parent::marc2rdf();
+			if(!$perRecord) parent::recordLoop();
 		}
 		catch(\Exception $e)
 		{
 			print $e->getMessage().' in file '.$e->getFile().' on line '.$e->getLine().'<br/>'.$e->getTraceAsString();
+		}
+	}
+	
+	public function next()
+	{
+		if($this->marcRecord = $this->marcRecords->next())
+		{
+			parent::marc2rdf();
+			return true;
+		}
+		else
+		{
+			return false;
 		}
 	}
 	

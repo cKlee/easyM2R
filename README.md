@@ -14,10 +14,10 @@ It's easy because you only need
 
 MARC2RDF is build upon the following software
 
-* File_MARC by Dan Scott, Copyright (c) 1991, 1999 Free Software Foundation, Inc.
-* JSON-LD processor for PHP and IRI Copyright (c) by Markus Lanthaler
-* EasyRdf Copyright (c) by Nicholas J Humfrey
-* forceutf8 by Sebastián Grignoli
+* [File_MARC](https://github.com/pear/File_MARC) by Dan Scott, Copyright (c) 1991, 1999 Free Software Foundation, Inc.
+* [JsonLD](https://github.com/lanthaler/JsonLD) processor for PHP and [IRI](https://github.com/lanthaler/IRI) Copyright (c) by Markus Lanthaler
+* [EasyRdf](https://github.com/njh/easyrdf) Copyright (c) by Nicholas J Humfrey
+* [forceutf8](https://github.com/neitanod/forceutf8) by Sebastián Grignoli
 
 # Overview
 
@@ -47,13 +47,17 @@ MARC2RDF is build upon the following software
 
 Just pull or clone the repository recursively.
 
-    git clone --recursive https://github.com/cKlee/MARC2RDF.git
+```
+git clone --recursive https://github.com/cKlee/MARC2RDF.git
+```
 
 # Quickstart using the command line
 
 Navigate to the MARC2RDF base directory where you'll find the file 'tordf.php'. At the command line type
 
-    php tordf.php -s <PATH_TO_YOUR_MARC_SOURCE> -i <MARC_INPUT_FORMAT> -o <RDF_OUTPUT_SERIALIZATION>
+```
+php tordf.php -s <PATH_TO_YOUR_MARC_SOURCE> -i <MARC_INPUT_FORMAT> -o <RDF_OUTPUT_SERIALIZATION>
+```
 
 This will output your MARC data in RDF with the desired output serialization. See [Using the command line interface] for further explanation of the command line options.
 
@@ -79,31 +83,40 @@ All options are optional. But if you want to convert your own MARC data, you hav
 
 You can test MARC2RDF by using the example marc data with the command
 
-    php tordf.php -s examples/marc/e-discover.mrc
+```
+php tordf.php -s examples/marc/e-discover.mrc
+```
 
 For image formats you might pipe the output to a file
 
-    php tordf.php -s examples/marc/e-discover.mrc -o png > e-discover.png
+```
+php tordf.php -s examples/marc/e-discover.mrc -o png > e-discover.png
+```
 
 # Using MARC2RDF in a custom PHP script
 
 Using MARC2RDF within a custom PHP script is necessary if you fetch the MARC data from a stream as a string and pass on to MARC2RDF. This sample code gives a short insight how a custom script could look like:
 
-    <?php
-    // always include the autoload.php
-    include('path/to/marc2rdf/autoload.php');
-    
-    // include your custom callback scripts
-    foreach(glob('my_callback/callback_*.php') as $filename) include $filename;
-    
-    // fetch your MARC data here
-    $xml_string = do something...
+```php
+<?php
+// use namespace
+use CK\MARC2RDF as m2r;
 
-    // initiate MARC2RDF
-    $marc2rdf = new MARCSTRING2RDF('../template/default.jsonld',$xml_string,'xml');
-    
-    // print pretty RDF for browser
-    print '<pre>'.htmlspecialchars($marc2rdf->output('turtle')).'</pre>';
+// always include the autoload.php
+include('path/to/marc2rdf/autoload.php');
+
+// include your custom callback scripts
+foreach(glob('my_callback/callback_*.php') as $filename) include $filename;
+
+// fetch your MARC data here
+$xml_string = do something...
+
+// initiate MARC2RDF
+$marc2rdf = new m2r\MARCSTRING2RDF('../template/default.jsonld',$xml_string,'xml');
+
+// print pretty RDF for browser
+print '<pre>'.htmlspecialchars($marc2rdf->output('turtle')).'</pre>';
+```
 
 ## Choosing the right class
 
@@ -181,9 +194,6 @@ public $graph_name = null;
 public $format = 'jsonld';
 ```
 
-### Public Methods
-
-
 ### XML caveat
 
 While it is possible to transform MARCXML data, there is a problem with namespaces within the XML. FILE_MARC does not handle namespaces until now. This behaviour may change in the future.
@@ -214,11 +224,13 @@ There is also a more powerful way to access MARC fields via [callbacks].
 
 In the template you must create a **@context** node. In the @context node the only mandatory entry is the MARC2RDF namespace declaration. 
 
-    {
-        "@context": {
-            "marc2rdf": "http://my.arbitratynamespace.com#"
-        }
+```json
+{
+    "@context": {
+        "marc2rdf": "http://my.arbitratynamespace.com#"
     }
+}
+```
 
 The prefix of the MARC2RDF namespace must be 'marc2rdf'. The namespaces identifier is also the base IRI to your RDF resources. Choose a custom identifier, which must end with '/' or '#'. You can overwrite the base IRI for your RDF resources by setting the $base param for the MARCFILE2RDF or MARCSTRING2RDF class or with the -b option for the command line tool.
 
@@ -228,9 +240,11 @@ The **@graph** is the template for each MARC record.
 
 Within the @graph you must define the resources **@id**. The value of the @id consists of the MARC2RDF namespace prefix and a MARC spec. I.e.
 
-    {
-        "@id": "marc2rdf:001_0"
-    }
+```json
+{
+    "@id": "marc2rdf:001_0"
+}
+```
 
 In this example, if the data in the control field '001' is '123245', then your resources IRI will be 'http://my.arbitratynamespace.com#12345'.
 
@@ -244,7 +258,9 @@ Callbacks are functions that are called if you specify them in the template. The
 
 In the template if you want to call a callback, prefix the callback name with the MARC2RDF namespace prefix 'marc2rdf'. This could look like this example
 
-    "oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035_a,OCoLC)"}
+```json
+"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035_a,OCoLC)"}
+```
 
 See [default callbacks] for specific usage.
 
@@ -297,11 +313,15 @@ Return data in the shape of the param m. Data of first param is filled in '$0', 
 
 Example
 
-    marc2rdf:callback_template(260_a,260_b,260_c,$0%20%3A%20$1%2C%20$2)
+```json
+marc2rdf:callback_template(260_a,260_b,260_c,$0%20%3A%20$1%2C%20$2)
+```
 
 leads to
 
-    Detmold : Kreis Lippe, Der Landrat
+```
+Detmold : Kreis Lippe, Der Landrat
+```
 
 #### callback\_substring_after
 
@@ -392,33 +412,37 @@ The var $record is a File_MARC_Record object. This you can access MARC data via 
 
 The var $_params is an associative array that might look like:
 
-    [specs] => Array
-            (
-                [0] => Array
-                    (
-                        [field] => 016
-                        [subfield] => a
-                    )
-
-                [1] => Array
-                    (
-                        [field] => 016
-                        [subfield] => 2
-                    )
-            )
-
-    [nonspecs] => Array
+```php
+[specs] => Array
         (
-            [0] => DE-600
+            [0] => Array
+                (
+                    [field] => 016
+                    [subfield] => a
+                )
+
+            [1] => Array
+                (
+                    [field] => 016
+                    [subfield] => 2
+                )
         )
 
-    [rootId] => _:b0
+[nonspecs] => Array
+    (
+        [0] => DE-600
+    )
+
+[rootId] => _:b0
+```
 
 See usage of key 'rootId' under [dealing with dynamic blank nodes].
 
 Return the data at the end of the function. Then include your custom callbacks in your script like
 
-    foreach(glob('my_callback/path/callback_*.php') as $filename) include $filename;
+```php
+foreach(glob('my_callback/path/callback_*.php') as $filename) include $filename;
+```
 
 or use the -c option for the command line interface.
 
@@ -428,46 +452,48 @@ or use the -c option for the command line interface.
 
 For example you specified a blank node in your template
 
-    "@id": "marc2rdf:001_0",
-    "property1":
-    {
-        "@id": "_:bnode_1",
-        "@type": "Sometype",
-        "property2": {"@value": "marc2rdf:866_z"}
-        "property3": {"@value": "marc2rdf:866_y"}
-    }
+```json
+"@id": "marc2rdf:001_0",
+"property1":
+{
+    "@id": "_:bnode_1",
+    "@type": "Sometype",
+    "property2": {"@value": "marc2rdf:866_z"}
+    "property3": {"@value": "marc2rdf:866_y"}
+}
+```
 
 and you want for each data of subfield 'z' and 'y' in field '866' to create a blank node, in your callback function the returning array might look like this
 
 ```php
-    // subfield z
-    [_:b0] => value 1
-    [_:b1] => value 2
-    [_:b2] => value 3
-    
-    // subfield y
-    [_:b0] => value 4
-    [_:b1] => value 5
-    [_:b2] => value 6
+// subfield z
+[_:b0] => value 1
+[_:b1] => value 2
+[_:b2] => value 3
+
+// subfield y
+[_:b0] => value 4
+[_:b1] => value 5
+[_:b2] => value 6
 ```
 
 This would result in something like
 
 ```rdf
-    <http://my.arbitratynamespace.com#12345>
-        someprefix:property1 [
-            a Sometype ;
-            someprefix:property2 "value 1" ;
-            someprefix:property2 "value 4"
-        ], [
-            a Sometype ;
-            someprefix:property2 "value 2" ;
-            someprefix:property2 "value 5"
-        ], [
-            a Sometype ;
-            someprefix:property2 "value 3" ;
-            someprefix:property2 "value 6"
-        ].
+<http://my.arbitratynamespace.com#12345>
+    someprefix:property1 [
+        a Sometype ;
+        someprefix:property2 "value 1" ;
+        someprefix:property2 "value 4"
+    ], [
+        a Sometype ;
+        someprefix:property2 "value 2" ;
+        someprefix:property2 "value 5"
+    ], [
+        a Sometype ;
+        someprefix:property2 "value 3" ;
+        someprefix:property2 "value 6"
+    ].
 ```
 
 But how do you know what blank node identifiers to use? This is the point where you'll need the value of the key 'rootId' in the var $_params. This value is the id of the currently created node. Just make sure that the first key in your returning array is this id and that all other keys are with a higher count.

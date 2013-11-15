@@ -439,6 +439,7 @@ For example you specified a blank node in your template
 
 and you want for each data of subfield 'z' and 'y' in field '866' to create a blank node, in your callback function the returning array might look like this
 
+```php
     // subfield z
     [_:b0] => value 1
     [_:b1] => value 2
@@ -448,9 +449,11 @@ and you want for each data of subfield 'z' and 'y' in field '866' to create a bl
     [_:b0] => value 4
     [_:b1] => value 5
     [_:b2] => value 6
+```
 
 This would result in something like
 
+```rdf
     <http://my.arbitratynamespace.com#12345>
         someprefix:property1 [
             a Sometype ;
@@ -465,6 +468,7 @@ This would result in something like
             someprefix:property2 "value 3" ;
             someprefix:property2 "value 6"
         ].
+```
 
 But how do you know what blank node identifiers to use? This is the point where you'll need the value of the key 'rootId' in the var $_params. This value is the id of the currently created node. Just make sure that the first key in your returning array is this id and that all other keys are with a higher count.
 

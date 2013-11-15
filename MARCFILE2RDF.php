@@ -12,10 +12,12 @@ class MARCFILE2RDF extends MARC2RDF {
 	/**
 	* constructor for the class
 	*
+	* @access public
 	* @param string $jsonld_file The local path or URL of the jsonld template file
 	* @param string $marc_file The local path of the MARC file
 	* @param null|string $marc_format The MARC format 
-	* @param null|string $base The base IRI for each MARC record in RDF 
+	* @param null|string $base The base IRI for each MARC record in RDF
+	* @param bool $perRecord Do not merge, just make the current recordGraph available
 	*/
 	public function __construct($jsonld_file,$marc_file,$marc_format = null,$base = null,$perRecord = false)
 	{
@@ -42,6 +44,11 @@ class MARCFILE2RDF extends MARC2RDF {
 		}
 	}
 	
+	/**
+	* Set next MARC record
+	* @access public
+	* @return bool True if next record is set | false if no record left
+	*/
 	public function next()
 	{
 		if($this->marcRecord = $this->marcRecords->next())

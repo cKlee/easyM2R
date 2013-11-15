@@ -12,10 +12,12 @@ class MARCSTRING2RDF extends MARC2RDF {
 	/**
 	* constructor for the class
 	*
+	* @access public
 	* @param string $jsonld_file The local path or URL of the jsonld template file
 	* @param string $marc_string MARC data as string
 	* @param null|string $marc_format The MARC format
-	* @param null|string $base The base IRI for each MARC record in RDF 
+	* @param null|string $base The base IRI for each MARC record in RDF
+	* @param bool $perRecord Do not merge, just make the current recordGraph available
 	*/
 	public function __construct($jsonld_file,$marc_string,$marc_format = null,$base = null,$perRecord = false)
 	{

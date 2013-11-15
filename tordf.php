@@ -20,6 +20,7 @@ $inputFormat       = 'marc';
 $pathToMyCallbacks = false;
 $base              = 'http://example.org/';
 $formats = array('turtle','rdfxml','ntriples','jsonld','json','dot', 'n3', 'png', 'gif', 'svg');
+$perRecord = false;
 for($i = 1; $i<count($argv); $i = $i+2)
 {
 	switch($argv[$i])
@@ -35,6 +36,8 @@ for($i = 1; $i<count($argv); $i = $i+2)
 		case '-c': $pathToMyCallbacks = rtrim($argv[$i+1],'/');
 		break;
 		case '-b': $base              = $argv[$i+1];
+		break;
+		case '-p': $perRecord         = filter_var($argv[$i+1], FILTER_VALIDATE_BOOLEAN);
 		break;
 		
 	}
@@ -53,19 +56,39 @@ if('xml' === $inputFormat)
 {
 	$XML        = simplexml_load_file($xml_source);
 	$xml_string = $XML->asXML();
-	$toRdf      = new m2r\MARCSTRING2RDF($template,$xml_string,'xml',$base);
+	$toRdf      = new m2r\MARCSTRING2RDF($template,$xml_string,'xml',$base,$perRecord);
 }
 else
 {
-	$toRdf      = new m2r\MARCFILE2RDF($template,$marcSource,null,$base);
+	$toRdf      = new m2r\MARCFILE2RDF($template,$marcSource,null,$base,$perRecord);
 }
 if(in_array($outputFormat,$formats))
 {
-	print $toRdf->output($outputFormat);
+	if($perRecord)
+	{
+		while($toRdf->next())
+		{
+			print $toRdf->output($outputFormat,$toRdf->recordGraph);
+		}
+	}
+	else
+	{
+		print $toRdf->output($outputFormat);
+	}
 }
 elseif('php' === $outputFormat)
 {
-	print_r($toRdf->output($outputFormat));
+	if($perRecord)
+	{
+		while($test->next())
+		{
+			print_r($toRdf->output($outputFormat,$toRdf->recordGraph));
+		}
+	}
+	else
+	{
+		print_r($toRdf->output($outputFormat));
+	}
 }
 else
 {

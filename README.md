@@ -61,7 +61,7 @@ This will output your MARC data in RDF with the desired output serialization. Se
 
 [Using the command line interface]: #using-the-command-line-interface
 
-With the marc3rdf command line interface you can only use MARC data from a file. If you fetch your MARC data from a stream you can only do this by using a custom php script.
+With the easyM2R command line interface you can only use MARC data from a file.
 
 The command line interface is called via the script **tordf.php** with the command **php tordf.php**. At the command line interface you have these options
 
@@ -71,6 +71,7 @@ The command line interface is called via the script **tordf.php** with the comma
 * -i The MARC input format. 'xml' for MARCXML source
 * -c The path to your custom callback functions directory
 * -b The base IRI for each MARC record in RDF
+* -p 0 or false for merging graphs before output (default might take a lot of memory) or 1 or true to output each single record graph
 
 All options are optional. But if you want to convert your own MARC data, you have to set the -s option at least.
 
@@ -108,7 +109,7 @@ Using MARC2RDF within a custom PHP script is necessary if you fetch the MARC dat
 
 MARC2RDF provides to main classes **MARCFILE2RDF** and **MARCSTRING2RDF**. Use the MARCFILE2RDF class if your data resides in a file and use MARCSTRING2RDF if you want to pass your MARC data as a string to MARC2RDF.
 
-### Class MARCFILE2RDF
+### Class CK\MARC2RDF\MARCFILE2RDF
 
 The MARCFILE2RDF class accepts 4 parameters:
 
@@ -116,8 +117,16 @@ The MARCFILE2RDF class accepts 4 parameters:
 * @param string Path to MARC data as a file
 * @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
 * @param null|string The base IRI for each MARC record in RDF
+* @param bool $perRecord Do not merge, just make the current recordGraph available
 
-### Class MARCFSTRING2RDF
+The MARCFILE2RDF class has 3 publich methods:
+
+* CK\\MARC2RDF\\MARCFILE2RDF::\__construct($jsonld_file,$marc_file,$marc_format = null,$base = null,$perRecord = false)
+* CK\\MARC2RDF\\MARCFILE2RDF::next()
+* CK\\MARC2RDF\\MARCFILE2RDF::output($format = 'jsonld',jld\GraphInterface $graph = null)
+
+
+### Class CK\MARC2RDF\MARCFSTRING2RDF
 
 The MARCSTRING2RDF class accepts 4 parameters:
 
@@ -125,6 +134,55 @@ The MARCSTRING2RDF class accepts 4 parameters:
 * @param string MARC data as string
 * @param null|string The MARC format must be one of 'jsonld', 'json', 'php', 'ntriples', 'turtle', 'rdfxml', 'dot', 'n3', 'png', 'gif', 'svg'
 * @param null|string The base IRI for each MARC record in RDF
+* @param bool $perRecord Do not merge, just make the current recordGraph available
+
+The MARCSTRING2RDF class has 3 publich methods:
+
+* CK\\MARC2RDF\\MARCSTRING2RDF::\__construct($jsonld_file,string $marc_string,$marc_format = null,$base = null,$perRecord = false)
+* CK\\MARC2RDF\\MARCSTRING2RDF::next()
+* CK\\MARC2RDF\\MARCSTRING2RDF::output($format = 'jsonld',jld\GraphInterface $graph = null)
+
+### Public Properties
+
+```php
+/**
+* @var string The local path or URL of the jsonld template file 
+*/
+public $jsonld_file;
+
+/**
+* @var string The local path or URL of the MARC source
+*/
+public $marc_source;
+
+/**
+* @var string the base IRI for the resource
+*/
+public $base;
+
+/**
+* @var GraphInterface Merge of all record graphs 
+*/
+public $newGraph;
+
+/**
+* @var GraphInterface The currently created graph
+*/
+public $recordGraph;
+
+/**
+* @var string|null The name of the template graph, which should be used
+*/
+public $graph_name = null;
+
+/**
+* @var string The desired output format
+*/
+public $format = 'jsonld';
+```
+
+### Public Methods
+
 
 ### XML caveat
 

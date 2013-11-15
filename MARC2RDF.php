@@ -34,6 +34,11 @@ class MARC2RDF {
 	public $newGraph;
 	
 	/**
+	* @var GraphInterface A temporary graph, will be merged into newGraph
+	*/
+	public $recordGraph;
+	
+	/**
 	* @var string|null The name of the template graph, which should be used
 	*/
 	public $graph_name = null;
@@ -83,11 +88,6 @@ class MARC2RDF {
 	*/
 	private $nodeId;
 	
-	/**
-	* @var GraphInterface A temporary graph, will be merged into newGraph
-	*/
-	private $recordGraph;
-
 	/**
 	* @var NodeInterface The node currently created in the recordGraph 
 	*/
@@ -143,121 +143,100 @@ class MARC2RDF {
 	}
 	
 	/**
-	* Checks weather a MARC record is present or loop through all records
-	*/
-	protected function marc2rdfMode()
-	{
-		if(!isset($this->marcRecord))
-		{
-			print "TEST2";
-			$this->recordLoop();
-		}
-		else
-		{
-			$this->marc2rdf();
-			print "TEST";
-
-		}
-	}
-	
-	/**
 	* marc2rdf the main method
 	*
 	* @access protected
 	*/
 	protected function marc2rdf()
 	{
+		$this->recordGraph = new jld\Graph;
+		$this->map = array();
 		
+		// iterate through all nodes
+		// create nodes
+		$i = 0;
+		foreach($this->nodes as $this->node)
+		{
 
-			$this->recordGraph = new jld\Graph;
-			$this->map = array();
+			$this->nodeId = $this->node->getId();
+			if(array_key_exists($this->nodeId,$this->map)) continue;
 			
-			// iterate through all nodes
-			// create nodes
-			$i = 0;
-			foreach($this->nodes as $this->node)
+			$data = false;
+			
+			if( 0 === $i ) // this is the root node
 			{
-
-				$this->nodeId = $this->node->getId();
-				if(array_key_exists($this->nodeId,$this->map)) continue;
-				
-				$data = false;
-				
-				if( 0 === $i ) // this is the root node
+				$wholeSpec = str_replace($this->base,'',$this->nodeId);
+				if($data = $this->getMarcData($wholeSpec))
 				{
-					$wholeSpec = str_replace($this->base,'',$this->nodeId);
-					if($data = $this->getMarcData($wholeSpec))
-					{
-						$data[0] = $this->base.$data[0];
-					}
-					else
-					{
-						throw new \Exception('No data for resource IRI found');
-					}
+					$data[0] = $this->base.$data[0];
 				}
 				else
 				{
-					if(strstr($this->nodeId,$this->base))
+					throw new \Exception('No data for resource IRI found');
+				}
+			}
+			else
+			{
+				if(strstr($this->nodeId,$this->base))
+				{
+					$wholeSpec = str_replace($this->base,'',$this->nodeId);
+					$data = $this->getMarcData($wholeSpec);
+				}
+				else
+				{
+					$data[0] = $this->nodeId;
+				}
+			}
+			
+			if($data)
+			{
+				foreach($data as $key => $id)
+				{
+					if('http' !== substr($id, 0, 4) && '_:' !== substr($id, 0, 2))
 					{
-						$wholeSpec = str_replace($this->base,'',$this->nodeId);
-						$data = $this->getMarcData($wholeSpec);
-					}
-					else
-					{
-						$data[0] = $this->nodeId;
+						$data[$key] = $this->base.$id;
 					}
 				}
 				
-				if($data)
+				foreach($data as $key => $id)
 				{
-					foreach($data as $key => $id)
+					if('_:' == substr($key, 0, 2))
 					{
-						if('http' !== substr($id, 0, 4) && '_:' !== substr($id, 0, 2))
-						{
-							$data[$key] = $this->base.$id;
-						}
+						$this->dynamicBlankNode($data);
+						continue 2;
 					}
 					
-					foreach($data as $key => $id)
+					if(!$this->recordGraph->getNode($id))
 					{
-						if('_:' == substr($key, 0, 2))
-						{
-							$this->dynamicBlankNode($data);
-							continue 2;
-						}
-						
-						if(!$this->recordGraph->getNode($id))
-						{
-							$this->currentNode = $this->recordGraph->createNode($id);
-							$this->map[$this->nodeId][] = $id;
-						}
-						$this->typeForNode();
+						$this->currentNode = $this->recordGraph->createNode($id);
+						$this->map[$this->nodeId][] = $id;
 					}
+					$this->typeForNode();
 				}
-				$this->iterateProperties();
-				$i++;
-			} // node loop
-			
-			// link nodes
-			$this->linkNodes();
-			
-			// clean up recordGraph
-			$this->cleanUp();
-			
-			// merge the record graph into the new resulting graph
-			$this->newGraph->merge($this->recordGraph);
+			}
+			$this->iterateProperties();
+			$i++;
+		} // node loop
+		
+		// link nodes
+		$this->linkNodes();
+		
+		// clean up recordGraph
+		$this->cleanUp();
 	}
 	
 	
 	/**
-	* Loop through MARC records
+	* Loop through MARC records and merge graphs
+	* @access protected
 	*/
 	protected function recordLoop()
 	{
-		print "LOOP";
 		while($this->marcRecord = $this->marcRecords->next()) 
 		{
 			$this->marc2rdf();
+			// merge the record graph into the new resulting graph
+			$this->newGraph->merge($this->recordGraph);
 		}
 	}
 	/**

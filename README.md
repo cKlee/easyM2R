@@ -1,8 +1,8 @@
-# MARC2RDF BETA
+# easyM2R BETA
 
 **This is a beta version and still being tested.**
 
-MARC2RDF is a php-based attempt to easily convert MARC data to RDF.
+easyM2R is a php-based attempt to easily convert MARC data to RDF.
 
 It's easy because you only need
 
@@ -12,7 +12,7 @@ It's easy because you only need
 
 # Credits
 
-MARC2RDF is build upon the following software
+easyM2R is build upon the following software
 
 * [File_MARC](https://github.com/pear/File_MARC) by Dan Scott, Copyright (c) 1991, 1999 Free Software Foundation, Inc.
 * [JsonLD](https://github.com/lanthaler/JsonLD) processor for PHP and [IRI](https://github.com/lanthaler/IRI) Copyright (c) by Markus Lanthaler
@@ -48,12 +48,12 @@ MARC2RDF is build upon the following software
 Just pull or clone the repository recursively.
 
 ```
-git clone --recursive https://github.com/cKlee/MARC2RDF.git
+git clone --recursive https://github.com/cKlee/easyM2R.git
 ```
 
 # Quickstart using the command line
 
-Navigate to the MARC2RDF base directory where you'll find the file 'tordf.php'. At the command line type
+Navigate to the easyM2R base directory where you'll find the file 'tordf.php'. At the command line type
 
 ```
 php tordf.php -s <PATH_TO_YOUR_MARC_SOURCE> -i <MARC_INPUT_FORMAT> -o <RDF_OUTPUT_SERIALIZATION>
@@ -79,9 +79,9 @@ The command line interface is called via the script **tordf.php** with the comma
 
 All options are optional. But if you want to convert your own MARC data, you have to set the -s option at least.
 
-## Testing MARC2RDF via command line
+## Testing easyM2R via command line
 
-You can test MARC2RDF by using the example marc data with the command
+You can test easyM2R by using the example marc data with the command
 
 ```
 php tordf.php -s examples/marc/e-discover.mrc
@@ -93,9 +93,9 @@ For image formats you might pipe the output to a file
 php tordf.php -s examples/marc/e-discover.mrc -o png > e-discover.png
 ```
 
-# Using MARC2RDF in a custom PHP script
+# Using easyM2R in a custom PHP script
 
-Using MARC2RDF within a custom PHP script is necessary if you fetch the MARC data from a stream as a string and pass on to MARC2RDF. This sample code gives a short insight how a custom script could look like:
+Using easyM2R within a custom PHP script is necessary if you fetch the MARC data from a stream as a string and pass on to easyM2R. This sample code gives a short insight how a custom script could look like:
 
 ```php
 <?php
@@ -103,7 +103,7 @@ Using MARC2RDF within a custom PHP script is necessary if you fetch the MARC dat
 use CK\MARC2RDF as m2r;
 
 // always include the autoload.php
-include('path/to/marc2rdf/autoload.php');
+include('path/to/easyM2R/autoload.php');
 
 // include your custom callback scripts
 foreach(glob('my_callback/callback_*.php') as $filename) include $filename;
@@ -111,16 +111,16 @@ foreach(glob('my_callback/callback_*.php') as $filename) include $filename;
 // fetch your MARC data here
 $xml_string = do something...
 
-// initiate MARC2RDF
-$marc2rdf = new m2r\MARCSTRING2RDF('../template/default.jsonld',$xml_string,'xml');
+// initiate easyM2R
+$easyM2R = new m2r\MARCSTRING2RDF('../template/default.jsonld',$xml_string,'xml');
 
 // print pretty RDF for browser
-print '<pre>'.htmlspecialchars($marc2rdf->output('turtle')).'</pre>';
+print '<pre>'.htmlspecialchars($easyM2R->output('turtle')).'</pre>';
 ```
 
 ## Choosing the right class
 
-MARC2RDF provides to main classes **MARCFILE2RDF** and **MARCSTRING2RDF**. Use the MARCFILE2RDF class if your data resides in a file and use MARCSTRING2RDF if you want to pass your MARC data as a string to MARC2RDF.
+easyM2R provides to main classes **MARCFILE2RDF** and **MARCSTRING2RDF**. Use the MARCFILE2RDF class if your data resides in a file and use MARCSTRING2RDF if you want to pass your MARC data as a string to easyM2R.
 
 ### Class CK\MARC2RDF\MARCFILE2RDF
 
@@ -212,7 +212,7 @@ In the template you want to access the MARC fields and subfields. This is done v
 
 That is, if you want to access subfield 'a' in field '210', the MARC spec is '210_a'. For MARC control fields the subfield MARC spec part is always '0' (i.e. MARC spec for control field 001 is 001_0).
 
-The MARC spec is only recognized as one, if it is prefixed with the MARC2RDF namespace (see [@context]).
+The MARC spec is only recognized as one, if it is prefixed with the easyM2R namespace (see [@context]).
 
 If there are multiple subfields with the same name in one field, there also will be created multiple nodes.
 
@@ -222,7 +222,7 @@ There is also a more powerful way to access MARC fields via [callbacks].
 
 [@context]: #context
 
-In the template you must create a **@context** node. In the @context node the only mandatory entry is the MARC2RDF namespace declaration. 
+In the template you must create a **@context** node. In the @context node the only mandatory entry is the easyM2R namespace declaration. 
 
 ```json
 {
@@ -232,13 +232,13 @@ In the template you must create a **@context** node. In the @context node the on
 }
 ```
 
-The prefix of the MARC2RDF namespace must be 'marc2rdf'. The namespaces identifier is also the base IRI to your RDF resources. Choose a custom identifier, which must end with '/' or '#'. You can overwrite the base IRI for your RDF resources by setting the $base param for the MARCFILE2RDF or MARCSTRING2RDF class or with the -b option for the command line tool.
+The prefix of the easyM2R namespace must be 'marc2rdf'. The namespaces identifier is also the base IRI to your RDF resources. Choose a custom identifier, which must end with '/' or '#'. You can overwrite the base IRI for your RDF resources by setting the $base param for the MARCFILE2RDF or MARCSTRING2RDF class or with the -b option for the command line tool.
 
 ## @graph
 
 The **@graph** is the template for each MARC record.
 
-Within the @graph you must define the resources **@id**. The value of the @id consists of the MARC2RDF namespace prefix and a MARC spec. I.e.
+Within the @graph you must define the resources **@id**. The value of the @id consists of the easyM2R namespace prefix and a MARC spec. I.e.
 
 ```json
 {
@@ -248,7 +248,7 @@ Within the @graph you must define the resources **@id**. The value of the @id co
 
 In this example, if the data in the control field '001' is '123245', then your resources IRI will be 'http://my.arbitratynamespace.com#12345'.
 
-Now define your properties and objects. Regardless of the node type you create (resource, typed value or untyped value) if you want to access a MARC field/subfield always use the MARC2RDF namespace as a prefix. Otherwise the MARC spec will not be recognized as one.
+Now define your properties and objects. Regardless of the node type you create (resource, typed value or untyped value) if you want to access a MARC field/subfield always use the easyM2R namespace as a prefix. Otherwise the MARC spec will not be recognized as one.
 
 ## callbacks
 
@@ -256,7 +256,7 @@ MARC data is not always that easy to access. Sometimes you have to check the ind
 
 Callbacks are functions that are called if you specify them in the template. There are some default callbacks (see [default callbacks]) but you can write your own callbacks (see [create custom callbacks]).
 
-In the template if you want to call a callback, prefix the callback name with the MARC2RDF namespace prefix 'marc2rdf'. This could look like this example
+In the template if you want to call a callback, prefix the callback name with the easyM2R namespace prefix 'marc2rdf'. This could look like this example
 
 ```json
 "oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035_a,OCoLC)"}

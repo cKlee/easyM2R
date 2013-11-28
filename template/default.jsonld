@@ -7,6 +7,7 @@
 		"dct": "http://purl.org/dc/terms/",
 		"rda": "http://rdvocab.info/Elements/",
 		"rdarel": "http://rdvocab.info/RDARelationshipsWEMI/",
+		"isbd": "http://iflastandards.info/ns/isbd/elements/",
 		"owl": "http://www.w3.org/2002/07/owl#",
 		"umbel": "http://umbel.org/umbel#",
 		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#",

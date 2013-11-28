@@ -54,7 +54,7 @@ if($pathToMyCallbacks)
 
 if('xml' === $inputFormat)
 {
-	$XML        = simplexml_load_file($xml_source);
+	$XML        = simplexml_load_file($marcSource);
 	$xml_string = $XML->asXML();
 	$toRdf      = new m2r\MARCSTRING2RDF($template,$xml_string,'xml',$base,$perRecord);
 }

@@ -569,12 +569,12 @@ class MARC2RDF {
 			{
 				foreach($data as $kdat => $dat)
 				{
-					$_data[$kdat] = enc\Encoding::toUTF8($dat);
+					$_data[$kdat] = trim(enc\Encoding::toUTF8($dat));
 				}
 			}
 			else
 			{
-				$_data[0] = enc\Encoding::toUTF8($data);
+				$_data[0] = trim(enc\Encoding::toUTF8($data));
 			}
 			return $_data;
 		}

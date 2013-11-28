@@ -191,7 +191,8 @@
 			"extend":{"@value": "marc2rdf:300_a", "@type": "xsd:string"},
 			"edition":{"@value": "marc2rdf:250_a", "@type": "xsd:string"},
 			"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035_a,OCoLC)", "@type": "xsd:string"},
-			"lccn":{"@value": "marc2rdf:010_a", "@type": "xsd:string"}
+			"lccn":{"@value": "marc2rdf:010_a", "@type": "xsd:string"},
+            "extent": {"@value": "marc2rdf:callback_multi_subfields(300_a,300_b,300_c)", "@type": "xsd:string"}
 		}
 	]
 }

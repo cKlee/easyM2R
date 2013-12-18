@@ -144,56 +144,56 @@
 	"@graph":
 	[
 		{
-			"@id": "marc2rdf:001_0",
+			"@id": "marc2rdf:001",
 			"@type": "bibo:Document",
-			"title": {"@value": "marc2rdf:245_a", "@type": "xsd:string"},
-			"issn": {"@value": "marc2rdf:022_a", "@type": "xsd:string"},
-			"isbn": {"@value": "marc2rdf:020_a", "@type": "xsd:string"},
+			"title": {"@value": "marc2rdf:245a", "@type": "xsd:string"},
+			"issn": {"@value": "marc2rdf:022a", "@type": "xsd:string"},
+			"isbn": {"@value": "marc2rdf:020a", "@type": "xsd:string"},
 			"otherTitleInformation": 
 			[ 
-				{"@value": "marc2rdf:245_b", "@type": "xsd:string"},
-				{"@value": "marc2rdf:callback_join(245_n,245_p,%3A)", "@type": "xsd:string"}
+				{"@value": "marc2rdf:245b", "@type": "xsd:string"},
+				{"@value": "marc2rdf:callback_join(245np,%3A)", "@type": "xsd:string"}
 			],
 			"uniformTitle":
 			[ 
-				{"@value": "marc2rdf:130_a", "@type": "xsd:string"},
-				{"@value": "marc2rdf:240_a", "@type": "xsd:string"},
-				{"@value": "marc2rdf:callback_with_indicator2(246_a,1)", "@type": "xsd:string"}
+				{"@value": "marc2rdf:130a", "@type": "xsd:string"},
+				{"@value": "marc2rdf:240a", "@type": "xsd:string"},
+				{"@value": "marc2rdf:246a__1", "@type": "xsd:string"}
 			],
-			"shortTitle": {"@value": "marc2rdf:210_a", "@type": "xsd:string"} ,
+			"shortTitle": {"@value": "marc2rdf:210a", "@type": "xsd:string"} ,
 			"bibliographicCitation": {"@value": "A constant string", "@type": "xsd:string"} ,
-			"publicationStatement": {"@value": "marc2rdf:callback_template(260_a,260_b,260_c,$0%20%3A%20$1%2C%20$2)", "@type": "xsd:string"} ,
+			"publicationStatement": {"@value": "marc2rdf:callback_template(260abc,$0%20%3A%20$1%2C%20$2)", "@type": "xsd:string"} ,
 			"creatorName": 
 			[ 
-				{"@value": "marc2rdf:100_a", "@type": "xsd:string"}, 
-				{"@value": "marc2rdf:110_a", "@type": "xsd:string"}
+				{"@value": "marc2rdf:100a", "@type": "xsd:string"}, 
+				{"@value": "marc2rdf:110a", "@type": "xsd:string"}
 			],
 			"contributorName":
 			[ 
-				{"@value": "marc2rdf:700_a", "@type": "xsd:string"}, 
-				{"@value": "marc2rdf:710_a", "@type": "xsd:string"}, 
-				{"@value": "marc2rdf:711_a", "@type": "xsd:string"}
+				{"@value": "marc2rdf:700a", "@type": "xsd:string"}, 
+				{"@value": "marc2rdf:710a", "@type": "xsd:string"}, 
+				{"@value": "marc2rdf:711a", "@type": "xsd:string"}
 			],
-			"placeOfPublication": {"@value": "marc2rdf:260_a", "@type": "xsd:string"} ,
-			"publisher": {"@value": "marc2rdf:260_b", "@type": "xsd:string"} ,
+			"placeOfPublication": {"@value": "marc2rdf:260a", "@type": "xsd:string"} ,
+			"publisher": {"@value": "marc2rdf:260b", "@type": "xsd:string"} ,
 			"issued": 
 			[
-				{"@value": "marc2rdf:260_c", "@type": "xsd:string"} ,
-				{"@value": "marc2rdf:callback_control_field_substring(008_0,7,14)", "@type": "xsd:string"}
+				{"@value": "marc2rdf:260c", "@type": "xsd:string"} ,
+				{"@value": "marc2rdf:008~7-14", "@type": "xsd:string"}
 			],
-			"hasPart": {"@id": "marc2rdf:774_w"} ,
-			"isPartOf": {"@id": "marc2rdf:773_w"} ,
-			"isPartOf": {"@id": "marc2rdf:770_w"} ,
-			"hasVersion": {"@id": "marc2rdf:775_w"} ,
-			"isFormatOf": {"@id": "marc2rdf:776_w"} ,
-			"precededBy": {"@id": "marc2rdf:780_w"} ,
-			"succeededBy": {"@id": "marc2rdf:marc2rdf:785_w"} ,
-			"language":{"@value": "marc2rdf:callback_control_field_substring(008_0,35,37)", "@type": "xsd:string"},
-			"extend":{"@value": "marc2rdf:300_a", "@type": "xsd:string"},
-			"edition":{"@value": "marc2rdf:250_a", "@type": "xsd:string"},
-			"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035_a,OCoLC)", "@type": "xsd:string"},
-			"lccn":{"@value": "marc2rdf:010_a", "@type": "xsd:string"},
-            "extent": {"@value": "marc2rdf:callback_multi_subfields(300_a,300_b,300_c)", "@type": "xsd:string"}
+			"hasPart": {"@id": "marc2rdf:774w"} ,
+			"isPartOf": {"@id": "marc2rdf:773w"} ,
+			"isPartOf": {"@id": "marc2rdf:770w"} ,
+			"hasVersion": {"@id": "marc2rdf:775w"} ,
+			"isFormatOf": {"@id": "marc2rdf:776w"} ,
+			"precededBy": {"@id": "marc2rdf:780w"} ,
+			"succeededBy": {"@id": "marc2rdf:785w"} ,
+			"language":{"@value": "marc2rdf:008~35-37", "@type": "xsd:string"},
+			"extend":{"@value": "marc2rdf:300a", "@type": "xsd:string"},
+			"edition":{"@value": "marc2rdf:250a", "@type": "xsd:string"},
+			"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035a,OCoLC)", "@type": "xsd:string"},
+			"lccn":{"@value": "marc2rdf:010a", "@type": "xsd:string"},
+            "extent": {"@value": "marc2rdf:300abc", "@type": "xsd:string"}
 		}
 	]
 }

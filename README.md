@@ -10,6 +10,10 @@ It's easy because you only need
   * a valid JSON-LD file which shows how your data should look like in RDF
   * PHP installed in version 5.3.x or higher
 
+## Change notes
+
+* **0.2beta**: easyM2R is now more easily to use. It now uses [MarcSpec](https://github.com/cKlee/php-marc-spec) a MARC spec as string parser and validator, which makes a lot of default callback functions deprecated. For custom callback functions the referenced data of the MARC data is always provided within the variable $_params. Thus you may not have to access the MARC record via File_MARC.  
+
 # Credits
 
 easyM2R is build upon the following software
@@ -18,6 +22,7 @@ easyM2R is build upon the following software
 * [JsonLD](https://github.com/lanthaler/JsonLD) processor for PHP and [IRI](https://github.com/lanthaler/IRI) Copyright (c) by Markus Lanthaler
 * [EasyRdf](https://github.com/njh/easyrdf) Copyright (c) by Nicholas J Humfrey
 * [forceutf8](https://github.com/neitanod/forceutf8) by Sebastián Grignoli
+* [MarcSpec](https://github.com/cKlee/php-marc-spec)
 
 # Overview
 
@@ -45,11 +50,13 @@ easyM2R is build upon the following software
 
 # Installation
 
-Just pull or clone the repository recursively.
+The best way to download easyM2R is to clone the repository recursively.
 
 ```
 git clone --recursive https://github.com/cKlee/easyM2R.git
 ```
+
+You can also download the [releases](https://github.com/cKlee/easyM2R/releases) and unpack them at the desired place.
 
 # Quickstart using the command line
 
@@ -109,7 +116,7 @@ include('path/to/easyM2R/autoload.php');
 foreach(glob('my_callback/callback_*.php') as $filename) include $filename;
 
 // fetch your MARC data here
-$xml_string = do something...
+$xml_string = fetch your...
 
 // initiate easyM2R
 $easyM2R = new m2r\MARCSTRING2RDF('../template/default.jsonld',$xml_string,'xml');
@@ -206,13 +213,17 @@ As an example a default template is provided [**`default.jsonld`**](template/def
 
 ## MARC spec
 
-In the template you want to access the MARC fields and subfields. This is done via a **MARC spec**. A MARC spec has a simple syntax:
+In the template you want to access the MARC fields and subfields. This is done via a **MARC spec**. A MARC spec has a defined syntax, which is described under http://cklee.github.io/marc-spec/marc-spec.html .
 
-    field_subfield
+In short, a MARC spec  
 
-That is, if you want to access subfield 'a' in field '210', the MARC spec is '210_a'. For MARC control fields the subfield MARC spec part is always '0' (i.e. MARC spec for control field 001 is 001_0).
+```
+fieldTag (["~" characterPositionOrRange] / [subfieldTags] ["_" indicators])
+```
 
-The MARC spec is only recognized as one, if it is prefixed with the easyM2R namespace (see [@context]).
+That is, if you want to access subfield 'a' in field '245', the MARC spec is '245a'. For MARC control fields there are no subfields but chracter position or range prefixed with the character "~". The MARC spec 008~0-4 is a reference to the characters 1 (first character with index 0) to 5 (fifth charcter with index 4) of MARC field 008. Character position and range can also be applied to the Leader. The MARC record Leader in a MARC spec is defined through 'LDR'. The MARC spec LDR~0 is a reference to the first character of the Leader.
+
+A MARC spec is only recognized, if it is prefixed with the easyM2R namespace (see [@context]).
 
 If there are multiple subfields with the same name in one field, there also will be created multiple nodes.
 
@@ -252,14 +263,14 @@ Now define your properties and objects. Regardless of the node type you create (
 
 ## callbacks
 
-MARC data is not always that easy to access. Sometimes you have to check the indicator first, or look up substrings. Or if you want to join data from subfields or shape data in a different way, there is a powerful way to do this via **callbacks**.
+MARC data is not always that easy to access. Sometimes you have to check the context, or look up substrings. Or if you want to join data from subfields or shape data in a different way, there is a powerful way to do this via **callbacks**.
 
-Callbacks are functions that are called if you specify them in the template. There are some default callbacks (see [default callbacks]) but you can write your own callbacks (see [create custom callbacks]).
+Callbacks are functions that are called if you specify them in the template. There are some default callbacks (see [default callbacks]) but you can write your own custom callbacks very easily (see [create custom callbacks]).
 
 In the template if you want to call a callback, prefix the callback name with the easyM2R namespace prefix 'marc2rdf'. This could look like this example
 
 ```json
-"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035_a,OCoLC)"}
+"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035a,OCoLC)"}
 ```
 
 See [default callbacks] for specific usage.
@@ -270,54 +281,24 @@ If you want to use a callback function to return a value for the rdf:type proper
 
 [default callbacks]: #default
 
-There are a bunch of predefined default callback functions that are listed here. Each default callback function takes one to n parameters (often the number is fixed), which are either MARC specs or nonspecs. Nonspecs must always be urlencoded.
-
-#### callback\_leader
-
-* param 1: MARC spec
-* param 2: start position
-* param 3: end position 
-
-Return data from param 1 with start position in param 2 and end position in param 3.
-
-While data in MARC leader is predominantly a code, this callback function is usually called from other callback functions, analayzing the returning code.
-
-#### callback\_with_indicators
-
-* param 1: MARC spec
-* param 2: indicator 1
-* param 3: indicator 2
-
-Return data, if subfield has indicator 1 and indicator 2.
-
-#### callback\_with_indicator2
-
-* param 1: MARC spec
-* param 2: indicator 2
-
-Return data, if subfield has indicator 2.
-
-#### callback\_with_indicator1
-
-* param 1: MARC spec
-* param 2: indicator 1
-
-Return data, if subfield has indicator 1.
+There are some predefined default callback functions that are listed here. Each default callback function takes one to n parameters (often the number is fixed), which are either MARC specs or nonspecs. Nonspecs must always be urlencoded.
 
 #### callback_template
 
-* param 1-n: MARC spec
-* param m: regex replace pattern
+* param 1: MARC spec
+* param 2: regex replace pattern
 
 Return data in the shape of the param m. Data of first param is filled in '$0', second in '$1' and so on...
 
 Example
 
 ```json
-marc2rdf:callback_template(260_a,260_b,260_c,$0%20%3A%20$1%2C%20$2)
+marc2rdf:callback_template(260abc,$0%20%3A%20$1%2C%20$2)
 ```
 
-leads to
+(since $0 : $1, $2 is url encoded $0%20%3A%20$1%2C%20$2)
+
+leads to something like
 
 ```
 Detmold : Kreis Lippe, Der Landrat
@@ -352,28 +333,6 @@ Return data if data from param 1 contains string in param 2.
 
 Return data without prefix from param 1 if it is prefixed with param 2 in parentheses.
 
-#### callback\_multi_subfields
-
-* param 1-n: MARC spec
-
-Return data from all MARC specs.
-
-#### callback\_make\_iri\_with_indicator2
-
-* param 1: MARC spec
-* param 2: IRI prefix
-* param 3: indicator 2
-
-Return IRI consisting of value of param 2 and data from param 1, if indicator 2 equals param 3. 
-
-#### callback\_make\_iri\_with_indicator1
-
-* param 1: MARC spec
-* param 2: IRI prefix
-* param 3: indicator 1
-
-Return IRI consisting of value of param 2 and data from param 1, if indicator 1 equals param 3. 
-
 #### callback\_make_iri
 
 * param 1: MARC spec
@@ -383,18 +342,16 @@ Return IRI consisting of value of param 2 and data from param 1.
 
 #### callback_join
 
-* param 1-n: MARC spec
-* param m: join character
+* param 1: MARC spec
+* param 2: join character
 
-Return data from param 1-n joined with character in param m. 
+Return data from param 1 joined with character in param 2. 
 
-#### callback\_control\_field_substring
+#### callback\_make\_bn
 
 * param 1: MARC spec
-* param 2: start position
-* param 3: end position
 
-Return data from param 1 with start position in param 2 and end position in param 3
+For each data element returned a whole new blank node is created having all properties of the original defined blank node.
 
 ### create custom callbacks
 
@@ -402,38 +359,48 @@ Return data from param 1 with start position in param 2 and end position in para
 
 Custom callback functions names must start with 'callback', otherwise they cannot be called.
 
-A callback functions takes two parameters. The first is the MARC record and the second is an array containing MARC specs and nonspes.
+A callback functions takes two parameters. The first is the MARC record and the second is an array containing MARC specs, nonspes and the resulting data.
 
 The first line of your custom callback function might look like
 
     function callback_mycustom(File_MARC_Record $record, array $_params)
 
-The var $record is a File_MARC_Record object. This you can access MARC data via its methods (see http://pear.php.net/package/File_MARC/docs for documentation).
+The variable $record is a File_MARC_Record object. This you can access MARC data via its methods (see http://pear.php.net/package/File_MARC/docs for documentation). Although you can access the MARC record data via File_MARC there is also the possibility to process the provided data within the index 'data' of the variable $_param.
 
-The var $_params is an associative array that might look like:
+For an example the statement in the JSON-LD template
+
+```json
+"oclcnum":{"@value": "marc2rdf:callback_prefix_in_parentheses(035a_01,OCoLC)"}
+```
+
+the variable $_params in called default callback function callback\_prefix\_in\_parentheses is an associative array that might look like:
 
 ```php
 [specs] => Array
         (
             [0] => Array
                 (
-                    [field] => 016
-                    [subfield] => a
-                )
-
-            [1] => Array
-                (
-                    [field] => 016
-                    [subfield] => 2
+                    [field] => 035
+                    [subfield] => Array
+                        (
+                            [a] => a
+                        )
+                    [indicator1] => 0
+                    [indicator2] => 1
                 )
         )
 
 [nonspecs] => Array
     (
-        [0] => DE-600
+        [0] => OCoLC
     )
 
 [rootId] => _:b0
+
+[data] => Array
+    (
+        [0] => (OCoLC)723997824
+    )
 ```
 
 See usage of key 'rootId' under [dealing with dynamic blank nodes].
@@ -458,8 +425,8 @@ For example you specified a blank node in your template
 {
     "@id": "_:bnode_1",
     "@type": "Sometype",
-    "property2": {"@value": "marc2rdf:866_z"}
-    "property3": {"@value": "marc2rdf:866_y"}
+    "property2": {"@value": "marc2rdf:866z"}
+    "property3": {"@value": "marc2rdf:866y"}
 }
 ```
 

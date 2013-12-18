@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:frbr="http://purl.org/vocab/frbr/core#"
+         xmlns:daia="http://purl.org/ontology/daia/"
+         xmlns:dso="http://purl.org/ontology/dso#"
+         xmlns:gr="http://purl.org/goodrelations/v1#"
+         xmlns:org="http://www.w3.org/ns/org#"
+         xmlns:service="http://purl.org/ontology/service#"
+         xmlns:isil="http://metadataregistry.org/uri/schema/isil/"
+         xmlns:ecpo="http://purl.org/ontology/ecpo#"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dct="http://purl.org/dc/terms/"
+         xmlns:holding="http://purl.org/ontology/holding#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+  <frbr:Item rdf:about="http://example.org/241687039">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-Mar1"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <gr:hasStockKeepingUnit>X</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-Mar1"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <gr:hasStockKeepingUnit>X</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-Mar1"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/b"/>
+        <gr:hasStockKeepingUnit>X</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-Mar1"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>10.[1969]</dc:coverage>
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1969</ecpo:hasBeginTemporal>
+            <ecpo:hasBeginVolumeNumbering>10</ecpo:hasBeginVolumeNumbering>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1969</ecpo:hasEndTemporal>
+            <ecpo:hasEndVolumeNumbering>10</ecpo:hasEndVolumeNumbering>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676949-9"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-Mar1"/>
+    <holding:label>X</holding:label>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/241687527">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <gr:hasStockKeepingUnit>Gew.oct.K.725</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <gr:hasStockKeepingUnit>Gew.oct.K.725</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/c"/>
+        <gr:hasStockKeepingUnit>Gew.oct.K.725</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>1912(1914); 1922(1924); 1924(1926); 1926(1927)</dc:coverage>
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1912</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1912</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1922</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1922</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1924</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1924</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1926</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1926</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676952-9"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+    <holding:label>Gew.oct.K.725</holding:label>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/241687705">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <gr:hasStockKeepingUnit>Gew.oct.K.731</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <gr:hasStockKeepingUnit>Gew.oct.K.731</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/c"/>
+        <gr:hasStockKeepingUnit>Gew.oct.K.731</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>1923(1925); 1925(1927); 1927(1929)</dc:coverage>
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1923</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1923</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1925</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1925</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1927</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1927</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676954-2"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-24"/>
+    <holding:label>Gew.oct.K.731</holding:label>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/241689597">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/b"/>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>1884/85(1885); 1886/87(1887) - 1889/90(1890)</dc:coverage>
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676966-9"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/241689767">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/b"/>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>1890/91(1891) - 1891/92(1892); 1893/94(1894) - 1898/99(1899)</dc:coverage>
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676969-4"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/241689856">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/b"/>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>1899/1900(1900) - 1900/01(1901)</dc:coverage>
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676970-0"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/241689953">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/b"/>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>#1#1901/02(1902)</dc:coverage>
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676972-4"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-61"/>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/241691052">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <gr:name>HB</gr:name>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-15"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <gr:hasStockKeepingUnit>54-4-1001:502</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-15"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <gr:hasStockKeepingUnit>54-4-1001:502</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-15"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/b"/>
+        <gr:hasStockKeepingUnit>54-4-1001:502</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-15"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>[1908]</dc:coverage>
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1908</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1908</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676978-5"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-15"/>
+    <holding:label>54-4-1001:502</holding:label>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/24169115X">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-31"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-31"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-31"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/c"/>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-31"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>28.1911,1 (S.1-8)</dc:coverage>
+        <rdfs:comment>wg kt7</rdfs:comment>
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <ecpo:hasChronologyGap>
+      <ecpo:Chronology>
+        <dc:coverage>Sammelband &quot;Zu Kaspar Hauser&quot;; Einzelnachweis &lt;O51 B 102,1&gt;</dc:coverage>
+        <dc:coverage>Desiderat: [N=1-33]</dc:coverage>
+      </ecpo:Chronology>
+    </ecpo:hasChronologyGap>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676980-3"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-31"/>
+    <rdfs:comment>Sammelband &quot;Zu Kaspar Hauser&quot;; Einzelnachweis &lt;O51 B 102,1&gt;</rdfs:comment>
+    <rdfs:comment>Desiderat: [N=1-33]</rdfs:comment>
+  </frbr:Item>
+
+  <frbr:Item rdf:about="http://example.org/608848034">
+    <daia:availableFor>
+      <dso:Presentation>
+        <gr:availableAtOrFrom>
+          <gr:Location>
+            <org:siteOf rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-101a"/>
+          </gr:Location>
+        </gr:availableAtOrFrom>
+
+        <gr:hasStockKeepingUnit>DMTZ 261</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-101a"/>
+      </dso:Presentation>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Loan>
+        <gr:hasStockKeepingUnit>DMTZ 261</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-101a"/>
+      </dso:Loan>
+    </daia:availableFor>
+
+    <daia:availableFor>
+      <dso:Interloan>
+        <isil:hasIllStatus rdf:resource="http://metadataregistry.org/uri/illcode/b"/>
+        <gr:hasStockKeepingUnit>DMTZ 261</gr:hasStockKeepingUnit>
+        <service:providedBy rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-101a"/>
+      </dso:Interloan>
+    </daia:availableFor>
+
+    <ecpo:hasChronology>
+      <ecpo:Chronology>
+        <dc:coverage>1992 - 1997</dc:coverage>
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1992</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1992</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+        <dct:hasPart>
+          <ecpo:Chronology>
+            <ecpo:hasBeginTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1997</ecpo:hasBeginTemporal>
+            <ecpo:hasEndTemporal rdf:datatype="http://www.w3.org/2001/XMLSchema#gYear">1997</ecpo:hasEndTemporal>
+          </ecpo:Chronology>
+        </dct:hasPart>
+
+        <rdfs:comment>ab 1998 Bereitstellung als Film aus DB Frankfurt</rdfs:comment>
+      </ecpo:Chronology>
+    </ecpo:hasChronology>
+
+    <ecpo:hasChronologyGap>
+      <ecpo:Chronology>
+        <dc:coverage>Mikrofilm-Ausg.</dc:coverage>
+      </ecpo:Chronology>
+    </ecpo:hasChronologyGap>
+
+    <holding:exemplarOf rdf:resource="http://ld.zdb-services.de/resource/2676982-7"/>
+    <holding:heldby rdf:resource="http://ld.zdb-services.de/resource/organisations/DE-101a"/>
+    <holding:label>DMTZ 261</holding:label>
+    <rdfs:comment>Mikrofilm-Ausg.</rdfs:comment>
+  </frbr:Item>
+
+</rdf:RDF>

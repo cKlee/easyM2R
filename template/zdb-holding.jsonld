@@ -1,0 +1,225 @@
+{
+	"@context": {
+		"marc2rdf": "http://example.org/",
+		"xsd": "http://www.w3.org/2001/XMLSchema#",
+		"bibo": "http://purl.org/ontology/bibo/",
+		"dc": "http://purl.org/dc/elements/1.1/",
+		"dct": "http://purl.org/dc/terms/",
+		"daia": "http://purl.org/ontology/daia/" ,
+		"dso": "http://purl.org/ontology/dso#" ,
+		"ecpo": "http://purl.org/ontology/ecpo#" ,
+		"foaf": "http://xmlns.com/foaf/0.1/" ,
+		"frbr": "http://purl.org/vocab/frbr/core#" ,
+		"gr": "http://purl.org/goodrelations/v1#" ,
+		"org": "http://www.w3.org/ns/org#" ,
+		"rdfs": "http://www.w3.org/2000/01/rdf-schema#" ,
+		"service": "http://purl.org/ontology/service#" ,
+		"rdf": "http://www.w3.org/1999/02/22-rdf-syntax-ns#" ,
+		"holding": "http://purl.org/ontology/holding#" ,
+		"isil": "http://metadataregistry.org/uri/schema/isil/" ,
+		"foaf": "http://xmlns.com/foaf/0.1/",
+		"Item": {
+			"@id": "http://purl.org/vocab/frbr/core#Item",
+			"@type": "@id"
+		},
+		"DocumentService": {
+			"@id": "http://purl.org/ontology/dso#DocumentService",
+			"@type": "@id"
+		},
+		"Location": {
+			"@id": "http://purl.org/goodrelations/v1#Location",
+			"@type": "@id"
+		},
+		"Chronology": {
+			"@id": "http://purl.org/ontology/ecpo#Chronology",
+			"@type": "@id"
+		},
+		"Loan": {
+			"@id": "http://purl.org/ontology/dso#Loan",
+			"@type": "@id"
+		},
+		"Interloan": {
+			"@id": "http://purl.org/ontology/dso#Interloan",
+			"@type": "@id"
+		},
+		"Presentation": {
+			"@id": "http://purl.org/ontology/dso#Presentation",
+			"@type": "@id"
+		},
+		"heldBy": {
+			"@id": "http://purl.org/ontology/holding#heldby",
+			"@type": "@id"
+		},
+		"exemplarOf": {
+			"@id": "http://purl.org/ontology/holding#exemplarOf",
+			"@type": "@id"
+		},
+		"broaderExemplar": {
+			"@id": "http://purl.org/ontology/holding#broaderExemplar",
+			"@type": "@id"
+		},
+		"broaderExemplarOf": {
+			"@id": "http://purl.org/ontology/holding#broaderExemplarOf",
+			"@type": "@id"
+		},
+		"narrowerExemplar": {
+			"@id": "http://purl.org/ontology/holding#narrowerExemplar",
+			"@type": "@id"
+		},
+		"narrowerExemplarOf": {
+			"@id": "http://purl.org/ontology/holding#narrowerExemplarOf",
+			"@type": "@id"
+		},
+		"label": {
+			"@id": "http://purl.org/ontology/holding#label",
+			"@type": "xsd:string"
+		},
+		"availableFor": {
+			"@id": "http://purl.org/ontology/daia/availableFor",
+			"@type": "@id"
+		},
+		"providedBy": {
+			"@id": "http://purl.org/ontology/service#providedBy",
+			"@type": "@id"
+		},
+		"hasChronology": {
+			"@id": "http://purl.org/ontology/ecpo#hasChronology",
+			"@type": "@id"
+		},
+		"hasChronologyGap": {
+			"@id": "http://purl.org/ontology/ecpo#hasChronologyGap",
+			"@type": "@id"
+		},
+		"hasBeginVolumeNumbering": {
+			"@id": "http://purl.org/ontology/ecpo#hasBeginVolumeNumbering",
+			"@type": "xsd:string"
+		},
+		"hasBeginTemporal": {
+			"@id": "http://purl.org/ontology/ecpo#hasBeginTemporal",
+			"@type": "xsd:string"
+		},
+		"hasEndVolumeNumbering": {
+			"@id": "http://purl.org/ontology/ecpo#hasEndVolumeNumbering",
+			"@type": "xsd:string"
+		},
+		"hasEndTemporal": {
+			"@id": "http://purl.org/ontology/ecpo#hasEndTemporal",
+			"@type": "xsd:string"
+		},
+		"availableAtOrFrom": {
+			"@id": "http://purl.org/goodrelations/v1#availableAtOrFrom",
+			"@type": "@id"
+		},
+		"hasStockKeepingUnit": {
+			"@id": "http://purl.org/goodrelations/v1#hasStockKeepingUnit",
+			"@type": "@id"
+		},
+		"siteOf": {
+			"@id": "http://www.w3.org/ns/org#siteOf",
+			"@type": "@id"
+		},
+		"name": {
+			"@id": "http://purl.org/goodrelations/v1#name",
+			"@type": "@id"
+		},
+		"comment": {
+			"@id": "http://www.w3.org/2000/01/rdf-schema#comment",
+			"@type": "xsd:string"
+		},
+		"hasPart": {
+			"@id": "http://purl.org/dc/terms/hasPart",
+			"@type": "@id"
+		},
+		"isPartOf": {
+			"@reverse": "http://purl.org/dc/terms/hasPart"
+		},
+		"description": {
+			"@id": "http://purl.org/dc/terms/description",
+			"@type": "xsd:string"
+		},
+		"coverage": {
+			"@id": "http://purl.org/dc/elements/1.1/coverage",
+			"@type": "xsd:string"
+		},
+		"gYear": {
+			"@id": "http://www.w3.org/2001/XMLSchema#gYear",
+			"@type": "@id"
+		},
+		"hasIllStatus": {
+			"@id": "http://metadataregistry.org/uri/schema/isil/hasIllStatus",
+			"@type": "@id"
+		},
+		"homepage": {
+			"@id": "http://xmlns.com/foaf/0.1/homepage",
+			"@type": "@id"
+		}
+	},
+	"@graph":
+	[
+		{
+			"@id": "marc2rdf:001_0",
+			"@type": "Item",
+			"label": {"@value": "marc2rdf:852c__1", "@type": "xsd:string"},
+			"comment": {"@value": "marc2rdf:866z__0", "@type": "xsd:string"},
+			"homepage": {"@id": "marc2rdf:856u__0"},
+			"heldBy": {
+				"@id": "marc2rdf:callback_make_iri(852a,http%3A%2F%2Fld.zdb-services.de%2Fresource%2Forganisations%2F)"
+			},
+			"exemplarOf": {
+				"@id": "marc2rdf:callback_make_iri(016a_7,http%3A%2F%2Fld.zdb-services.de%2Fresource%2F)"
+			},
+			"hasChronology":
+			{
+				"@id": "_:bn3",
+				"@type": "Chronology",
+				"comment": {"@value": "marc2rdf:866x_30", "@type": "xsd:string"},
+				"coverage": {"@value": "marc2rdf:866a_30", "@type": "xsd:string"},
+				"hasPart":
+				{
+					"@id": "_:bn7",
+					"@type": "Chronology",
+					"hasBeginVolumeNumbering": {"@value": "marc2rdf:callback_make_bn(859a_0)", "@type": "xsd:string"},
+					"hasBeginTemporal": {"@value": "marc2rdf:callback_make_bn(859i_0)", "@type": "gYear"},
+					"hasEndVolumeNumbering": {"@value": "marc2rdf:callback_make_bn(859a_1)", "@type": "xsd:string"},
+					"hasEndTemporal": {"@value": "marc2rdf:callback_make_bn(859i_1)", "@type": "gYear"}
+				}
+			},
+			"hasChronologyGap":
+			{
+				"@id": "_:bn4",
+				"@type": "Chronology",
+				"coverage": {"@value": "marc2rdf:866z_30", "@type": "xsd:string"}
+			},
+			"availableFor":
+			[
+				{
+					"@id": "_:bn0",
+					"@type": "Presentation",
+					"hasStockKeepingUnit": {"@value": "marc2rdf:callback_make_bn(852c__2)"},
+					"providedBy": {"@id": "marc2rdf:callback_make_iri(852a,http%3A%2F%2Fld.zdb-services.de%2Fresource%2Forganisations%2F)"},
+					"availableAtOrFrom":
+					{
+						"@id": "_:bn6",
+						"@type": "Location",
+						"siteOf": {"@id": "marc2rdf:callback_make_iri(852a,http%3A%2F%2Fld.zdb-services.de%2Fresource%2Forganisations%2F)"},
+						"name": {"@value":"marc2rdf:852b__2", "@type": "xsd:string"}
+					}
+				},
+				{
+					"@id": "_:bn1",
+					"@type": "Loan",
+					"hasStockKeepingUnit": {"@value": "marc2rdf:callback_make_bn(852c__1)"},
+					"comment": {"@value": "marc2rdf:852z__1", "@type": "xsd:string"},
+					"providedBy": {"@id": "marc2rdf:callback_make_iri(852a,http%3A%2F%2Fld.zdb-services.de%2Fresource%2Forganisations%2F)"}
+				},
+				{
+					"@id": "_:bn2",
+					"@type": "Interloan",
+					"hasStockKeepingUnit": {"@value": "marc2rdf:callback_make_bn(852c__1)"},
+					"hasIllStatus": {"@id": "marc2rdf:callback_make_iri(092o,http%3A%2F%2Fmetadataregistry.org%2Furi%2Fillcode%2F)"},
+					"providedBy": {"@id": "marc2rdf:callback_make_iri(852a,http%3A%2F%2Fld.zdb-services.de%2Fresource%2Forganisations%2F)"}
+				}
+			]
+		}
+	]
+}

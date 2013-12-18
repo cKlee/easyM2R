@@ -253,7 +253,7 @@ Within the @graph you must define the resources **@id**. The value of the @id co
 
 ```json
 {
-    "@id": "marc2rdf:001_0"
+    "@id": "marc2rdf:001"
 }
 ```
 

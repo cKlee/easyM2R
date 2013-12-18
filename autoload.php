@@ -6,7 +6,7 @@
 * file that was distributed with this source code.
 */
 $path = ini_get('include_path');
-$otherPaths = array('/m2r_lib','/m2r_lib/PEAR_Exception','/m2r_lib/File_MARC');
+$otherPaths = array('/PEAR_Exception','/File_MARC');
 foreach($otherPaths as $otherPath)
 {
 	ini_set('include_path', dirname(__FILE__).$otherPath.PATH_SEPARATOR.$path);

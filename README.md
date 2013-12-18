@@ -139,7 +139,7 @@ The MARCFILE2RDF class accepts 4 parameters:
 * @param null|string The base IRI for each MARC record in RDF
 * @param bool $perRecord Do not merge, just make the current recordGraph available
 
-The MARCFILE2RDF class has 3 publich methods:
+The MARCFILE2RDF class has 3 public methods:
 
 * CK\\MARC2RDF\\MARCFILE2RDF::\__construct($jsonld_file,$marc_file,$marc_format = null,$base = null,$perRecord = false)
 * CK\\MARC2RDF\\MARCFILE2RDF::next()
@@ -156,7 +156,7 @@ The MARCSTRING2RDF class accepts 4 parameters:
 * @param null|string The base IRI for each MARC record in RDF
 * @param bool $perRecord Do not merge, just make the current recordGraph available
 
-The MARCSTRING2RDF class has 3 publich methods:
+The MARCSTRING2RDF class has 3 public methods:
 
 * CK\\MARC2RDF\\MARCSTRING2RDF::\__construct($jsonld_file,string $marc_string,$marc_format = null,$base = null,$perRecord = false)
 * CK\\MARC2RDF\\MARCSTRING2RDF::next()

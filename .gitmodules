@@ -28,3 +28,30 @@
 [submodule "php-marc-spec"]
 	path = php-marc-spec
 	url = https://github.com/cKlee/php-marc-spec.git
+[submodule "lib/php-marc-spec"]
+	path = lib/php-marc-spec
+	url = https://github.com/cKlee/php-marc-spec.git
+[submodule "lib/PEAR_Exception"]
+	path = lib/PEAR_Exception
+	url = https://github.com/pear/PEAR_Exception.git
+[submodule "lib/Validate_ISPN"]
+	path = lib/Validate_ISPN
+	url = https://github.com/pear/Validate_ISPN.git
+[submodule "lib/Validate"]
+	path = lib/Validate
+	url = https://github.com/pear/Validate.git
+[submodule "lib/easyrdf"]
+	path = lib/easyrdf
+	url = https://github.com/njh/easyrdf.git
+[submodule "lib/JsonLD"]
+	path = lib/JsonLD
+	url = https://github.com/lanthaler/JsonLD.git
+[submodule "lib/IRI"]
+	path = lib/IRI
+	url = https://github.com/lanthaler/IRI.git
+[submodule "lib/File_MARC"]
+	path = lib/File_MARC
+	url = https://github.com/pear/File_MARC.git
+[submodule "lib/forceutf8"]
+	path = lib/forceutf8
+	url = https://github.com/neitanod/forceutf8.git

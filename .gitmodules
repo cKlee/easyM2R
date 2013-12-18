@@ -1,3 +1,30 @@
 [submodule "m2r_lib"]
 	path = m2r_lib
 	url = https://github.com/cKlee/m2r_lib.git
+[submodule "PEAR_Exception"]
+	path = PEAR_Exception
+	url = https://github.com/pear/PEAR_Exception.git
+[submodule "Validate_ISPN"]
+	path = Validate_ISPN
+	url = https://github.com/pear/Validate_ISPN.git
+[submodule "Validate"]
+	path = Validate
+	url = https://github.com/pear/Validate.git
+[submodule "easyrdf"]
+	path = easyrdf
+	url = https://github.com/njh/easyrdf.git
+[submodule "JsonLD"]
+	path = JsonLD
+	url = https://github.com/lanthaler/JsonLD.git
+[submodule "IRI"]
+	path = IRI
+	url = https://github.com/lanthaler/IRI.git
+[submodule "File_MARC"]
+	path = File_MARC
+	url = https://github.com/pear/File_MARC.git
+[submodule "forceutf8"]
+	path = forceutf8
+	url = https://github.com/neitanod/forceutf8.git
+[submodule "php-marc-spec"]
+	path = php-marc-spec
+	url = https://github.com/cKlee/php-marc-spec.git

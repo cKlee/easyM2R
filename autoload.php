@@ -26,6 +26,10 @@ spl_autoload_register(
 			$path = implode('/', array_slice(explode('\\', $class), 2)) . '.php';
 			require_once $path;
 			return true;
+		} elseif (0 === strpos($class, 'CK\\MarcSpec\\')) {
+			$path = implode('/', array_slice(explode('\\', $class), 2)) . '.php';
+			require_once 'php-marc-spec/' . $path;
+			return true;
 		}
 		elseif($class == 'File_MARC') 
 		{

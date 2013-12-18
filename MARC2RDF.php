@@ -10,6 +10,7 @@ use ML\JsonLD as jld;
 use ML\JsonLD\TypedValue;
 use ML\IRI as iri;
 use ForceUTF8 as enc;
+use CK\MarcSpec\MarcSpec;
 
 class MARC2RDF {
 
@@ -400,19 +401,6 @@ class MARC2RDF {
 						$this->recordGraph->removeNode($recordNode);
 					}
 				}
-				#else
-				#{
-				#	foreach($recordProperties as $propName => $node)
-				#	{
-				#		if(is_a($node,'ML\JsonLD\Node'))
-				#		{
-				#			if( !$this->recordGraph->getNode($node->getId()) )
-				#			{
-				#				$this->recordGraph->removeNode($recordNode);
-				#			}
-				#		}
-				#	}
-				#}
 			}
 		}
 	}
@@ -515,7 +503,27 @@ class MARC2RDF {
 			}
 		}
 	}
-
+	
+	/**
+	* checks for indicators
+	* @access private
+	* @param File_MARC_Data_Field $field	A FILE_MARC Data Field
+	* @return bool	True if data field is in context of indicators,
+	*				false is data field is not. 
+	*/
+	private function check_indicators(\File_MARC_Data_Field $field)
+	{
+		$indContext = true;
+		if(array_key_exists('indicator1',$this->spec))
+		{
+			$indContext = ($field->getIndicator(1) == $this->spec['indicator1']) ? true : false;
+		}
+		if(array_key_exists('indicator2',$this->spec))
+		{
+			$indContext = ($field->getIndicator(2) == $this->spec['indicator2']) ? true : false;
+		}
+		return $indContext;
+	}
 	/**
 	* gets marc data directly or via callback
 	*
@@ -524,46 +532,77 @@ class MARC2RDF {
 	*/
 	private function getMarcData($wholeSpec)
 	{
-
-		$data = false;
-
 		$this->analyzeSpec($wholeSpec);
-
-		if( !is_null( $this->callback ) )
+		$data = null;
+		foreach($this->spec as $spec)
 		{
-			$_params = array();
-			$_params['specs'] = $this->spec;
-			$_params['nonspecs'] = $this->nonSpec;
-			if(isset($this->currentNode)) $_params['rootId'] = $this->currentNode->getId();
-			
-			$data = $this->_call_callback($this->callback, $_params);
-		}
-		else
-		{
-			if($fields = $this->marcRecord->getFields($this->spec['field']))
+			if("LDR" == $spec['field'])
 			{
-				$data = array();
+				if(array_key_exists('charStart',$this->spec))
+				{
+					$data[] = substr($this->marcRecord->getLeader(),$spec['charStart'],$spec['charLength']);
+				}
+				else
+				{
+					$data[] = $this->marcRecord->getLeader();
+				}
+			}
+			elseif($fields = $this->marcRecord->getFields($spec['field']))
+			{
 				foreach($fields as $field)
 				{
 					if(!$field->isControlField())
 					{
-						if($subfields = $field->getSubfields($this->spec['subfield']))
+						if($this->check_indicators($field))
 						{
-							foreach($subfields as $subfield)
+							foreach($spec['subfield'] as $sf)
 							{
-								if(!$subfield->isEmpty()) $data[] = $subfield->getData();
+								if($subfields = $field->getSubfields($sf))
+								{
+									foreach($subfields as $subfield)
+									{
+										if(!$subfield->isEmpty()) $data[] = $subfield->getData();
+									}
+								}
 							}
 						}
-					} 
+					}
 					else
 					{
-						if(!$field->isEmpty()) $data[] = $field->getData();
+						if(!$field->isEmpty())
+						{
+							if(array_key_exists('charStart',$spec))
+							{
+								$substr = substr($field->getData(),$spec['charStart'],$spec['charLength']);
+								if(!strstr($substr,'|')) $data[] = $substr;
+							}
+							else
+							{
+								$data[] = $field->getData();
+							}
+						}
 					}
 				}
 			}
 		}
-		if(is_null($data)) return false;
-		if($data)
+
+		if(is_null($data))
+		{
+			return false;
+		}
+		// call callbac function
+		elseif( !is_null( $this->callback ) )
+		{
+			$_params = array();
+			$_params['specs'] = $this->spec;
+			$_params['nonspecs'] = $this->nonSpec;
+			$_params['data'] = $data;
+			if(isset($this->currentNode)) $_params['rootId'] = $this->currentNode->getId();
+			$data = $this->_call_callback($this->callback, $_params);
+			if(is_null($data)) return false;
+			return (is_array($data)) ?  $data : array($data);
+		}
+		else
 		{
 			if(is_array($data)) 
 			{
@@ -578,7 +617,7 @@ class MARC2RDF {
 			}
 			return $_data;
 		}
-		return $data;
+
 	}
 	
 	/**
@@ -600,7 +639,6 @@ class MARC2RDF {
 		{
 			throw new \Exception('callback function '. $callback .' is not callable');
 		}
-	
 	}
 	
 	
@@ -670,7 +708,10 @@ class MARC2RDF {
 		}
 		else
 		{
-			$this->spec = $this->_parseSpec( trim($wholeSpec) );
+			if(!$this->spec[] = $this->_parseSpec( trim($wholeSpec) ))
+			{
+				throw new \RuntimeException("Configured MARC spec '".$wholeSpec."' is not valid");
+			}
 		}
 	}
 	
@@ -685,11 +726,24 @@ class MARC2RDF {
 	*/
 	private static function _parseSpec($marcSpec)
 	{
-		$marcSpec = str_replace('__','_',urldecode($marcSpec));
-		$_marcSpec = explode('_',$marcSpec);
-		if(count($_marcSpec) < 2) return false;
-		$_pasedSpec['field'] = $_marcSpec[0];
-		$_pasedSpec['subfield'] = $_marcSpec[1];
+		try
+		{
+			$marcSpec = new MarcSpec($marcSpec);
+		}
+		catch(\Exception $e)
+		{
+			return false;
+		}
+		$_pasedSpec['field'] = $marcSpec->getFieldTag();
+		if(!is_null($subfields = $marcSpec->getSubfields())) $_pasedSpec['subfield'] = $subfields;
+		if(!is_null($indicator1 = $marcSpec->getIndicator1())) $_pasedSpec['indicator1'] = $indicator1;
+		if(!is_null($indicator2 = $marcSpec->getIndicator2())) $_pasedSpec['indicator2'] = $indicator2;
+		if(!is_null($charStart = $marcSpec->getCharStart())) 
+		{
+			$_pasedSpec['charStart'] = $charStart;
+			$_pasedSpec['charEnd'] = $marcSpec->getCharEnd();
+			$_pasedSpec['charLength'] = $marcSpec->getCharLength();
+		}
 		return $_pasedSpec;
 	}
 	

@@ -1,6 +1,6 @@
-# easyM2R BETA
+# easyM2R Deprecated
 
-**This is a beta version and still being tested.**
+**This repository is deprecated in favour of the more powerful tool [Catmandu](http://librecat.org/)**
 
 easyM2R is a php-based attempt to easily convert MARC data to RDF.
 
@@ -21,7 +21,7 @@ easyM2R is build upon the following software
 * [File_MARC](https://github.com/pear/File_MARC) by Dan Scott, Copyright (c) 1991, 1999 Free Software Foundation, Inc.
 * [JsonLD](https://github.com/lanthaler/JsonLD) processor for PHP and [IRI](https://github.com/lanthaler/IRI) Copyright (c) by Markus Lanthaler
 * [EasyRdf](https://github.com/njh/easyrdf) Copyright (c) by Nicholas J Humfrey
-* [forceutf8](https://github.com/neitanod/forceutf8) by Sebasti·n Grignoli
+* [forceutf8](https://github.com/neitanod/forceutf8) by Sebasti√°n Grignoli
 * [MarcSpec](https://github.com/cKlee/php-marc-spec)
 
 # Overview
